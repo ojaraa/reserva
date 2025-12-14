@@ -1,0 +1,199 @@
+import { cn } from "@/lib/utils";
+import { serviceCategories, type ServiceCategoryKey } from "@/models/data";
+import type { AppointmentData } from "@/models/interface";
+import { format } from "date-fns";
+
+const WeeklyView = ({
+  currentDate,
+  appointments,
+}: {
+  currentDate: Date;
+  appointments: AppointmentData[];
+}) => {
+  const hours = Array.from({ length: 24 }, (_, i) => i);
+  const days = Array.from({ length: 7 }, (_, i) => {
+    const date = new Date(currentDate);
+    date.setDate(currentDate.getDate() + i);
+    return date;
+  });
+
+  const timeSlots = Array.from({ length: 48 }, (_, i) => i);
+
+  return (
+    <div className="border rounded-b">
+      <div className="flex">
+        <div className="pt-10 border-r bg-muted ">
+          {hours.map((hour) => (
+            <div
+              className="whitespace-nowrap text-xs text-muted-foreground h-20 pl-4  "
+              key={hour}
+            >
+              {hour === 0
+                ? "12 AM"
+                : hour < 12
+                ? `${hour} AM`
+                : hour === 12
+                ? "12 PM"
+                : `${hour - 12} PM`}
+            </div>
+          ))}
+        </div>
+        <div className="w-full flex flex-col ">
+          <div className="grid grid-cols-7 border-b">
+            {days.map((day) => {
+              const today = new Date().toDateString() === day.toDateString();
+              return (
+                <div
+                  className={cn(
+                    "flex items-center justify-center border-r text-center py-3"
+                  )}
+                  key={day.toISOString()}
+                >
+                  <div className="flex text-xs items-center gap-x-1">
+                    <p className="">
+                      {day.toLocaleDateString("en-US", { weekday: "short" })}
+                    </p>
+
+                    <div
+                      className={cn(
+                        today &&
+                          "bg-primary-blue h-5 w-5 text-xs flex items-center justify-center rounded-full text-center text-white"
+                      )}
+                    >
+                      {day.getDate()}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="w-full h-full grid grid-cols-7  ">
+            {days.map((day) => {
+              //   const dailyAppointments = appointments.filter(
+              //     (appointment) =>
+              //       new Date(appointment?.date).toDateString() ===
+              //       day.toDateString()
+              //   );
+              return (
+                <div className="w-full relative border-r" key={day.toISOString()}>
+                  {timeSlots.map((slot) => {
+                    const filteredApppointments = appointments.filter(
+                      (appointment) =>
+                        new Date(appointment.date).toDateString() ===
+                          day.toDateString() &&
+                        new Date(appointment?.startTime).getHours() === slot
+                    );
+
+                    return (
+                      <div
+                        className="h-10 border-b  hover:bg-muted/50 cursor-pointer"
+                        key={slot}
+                      >
+                        {filteredApppointments.map((appointment) => {
+                          const category =
+                            serviceCategories[
+                              appointment?.serviceCategory as ServiceCategoryKey
+                            ];
+
+                          const startTime = new Date(appointment.startTime);
+                          const endTime = new Date(appointment.endTime);
+                          const startMinutes =
+                            startTime.getHours() * 60 + startTime.getMinutes();
+                          const endMinutes =
+                            endTime.getHours() * 60 + endTime.getMinutes();
+                          const durationMinutes = endMinutes - startMinutes;
+                          const topPosition = (startMinutes / 30) * 40; 
+                          const height = (durationMinutes / 30) * 40;
+
+                          return (
+                            <div
+                              className={`absolute w-full rounded-[5px] px-1.5 py-[1.6px] whitespace-nowrap bg-[${category?.pastelColor}] cursor-pointer`}
+                              style={{
+                                backgroundColor: category?.pastelColor,
+                                color: category?.color,
+                                borderColor: category?.color,
+                                borderWidth: ".5px",
+                                top: `${topPosition}px`,
+                                height: `${height}px`,
+                              }}
+                            >
+                              <p className="font-bold truncate text-[8.5px] whitespace-nowrap">
+                                {appointment.serviceName}
+                              </p>
+                              <p className=" text-[8.5px] font-medium">
+                                {format(
+                                  new Date(appointment?.startTime),
+                                  "hh:mm a"
+                                )}{" "}
+                                -{" "}
+                                {format(
+                                  new Date(appointment?.endTime),
+                                  "hh:mm a"
+                                )}
+                              </p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default WeeklyView;
+
+// {timeSlots.map((slot) => (
+//     <div
+//       className="h-10 border-b hover:bg-muted/50 cursor-pointer"
+//       key={slot}
+//     />
+//   ))}
+
+//      {dailyAppointments.map((appointment) => {
+//     const startTime = new Date(appointment.startTime);
+//     const endTime = new Date(appointment.endTime);
+
+//     // Calculate position: hours * 2 slots + minutes/30
+//     const startMinutes = startTime.getHours() * 60 + startTime.getMinutes();
+//     const endMinutes = endTime.getHours() * 60 + endTime.getMinutes();
+//     const durationMinutes = endMinutes - startMinutes;
+
+//     // Each slot is h-10 (40px), representing 30 minutes
+//     const topPosition = (startMinutes / 30) * 40; // 40px per 30-min slot
+//     const height = (durationMinutes / 30) * 40;
+
+//     const category =
+//       serviceCategories[
+//         appointment?.serviceCategory as ServiceCategoryKey
+//       ];
+
+//     return (
+//       <div
+//         key={appointment.id}
+//         className="absolute left-0 right-0 mx-0.5 rounded-[5px] px-1.5 py-[1.6px] cursor-pointer overflow-hidden"
+//         style={{
+//           top: `${topPosition}px`,
+//           height: `${height}px`,
+//           backgroundColor: category?.pastelColor,
+//           color: category?.color,
+//           borderColor: category?.color,
+//           borderWidth: '0.5px',
+//         }}
+//       >
+//         <p className="font-bold truncate text-[8.5px] whitespace-nowrap">
+//           {appointment.serviceName}
+//         </p>
+//         <p className="text-[8.5px] font-medium">
+//           {format(startTime, "hh:mm a")} - {format(endTime, "hh:mm a")}
+//         </p>
+//       </div>
+//     );
+//   })}
