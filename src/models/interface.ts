@@ -16,3 +16,7 @@ export interface AppointmentData {
   createdAt: string;
   updatedAt?: string;
 };
+
+export type UserType = "client" | "vendor";
+
+

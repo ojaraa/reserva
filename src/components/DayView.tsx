@@ -5,6 +5,7 @@ const DayView = ({ currentDate }: { currentDate: Date }) => {
 //     date.setDate(currentDate.getDate() + i);
 //     return date;
 //   });
+console.log(currentDate)
   return (
     <div className="border rounded-b">
       <div className="flex">

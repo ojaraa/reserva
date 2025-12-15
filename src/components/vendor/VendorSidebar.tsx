@@ -16,10 +16,16 @@ import {
   Server,
   Users,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "../ui/button";
 
 const VendorSidebar = () => {
+  const location = useLocation();
+
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
+
   return (
     <Sidebar className="px-4 py-4 ">
       <SidebarHeader>
@@ -32,7 +38,7 @@ const VendorSidebar = () => {
         <SidebarMenu className="mt-6">
           {vendorSidebarItems.map((item) => (
             <SidebarMenuItem className="pb-2 " key={item.label}>
-              <SidebarMenuButton asChild>
+              <SidebarMenuButton asChild className={`${isActive(item.url) && "bg-[#e9e9f7] text-sidebar-accent-foreground"}`}>
                 <Link to={item.url}>
                   <item.icon />
                   <span>{item.label}</span>

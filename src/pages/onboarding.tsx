@@ -16,24 +16,29 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { serviceCategories } from "@/models/data";
+import type { UserType } from "@/models/interface";
 
 const Onboarding = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const navigate = useNavigate()
-  const [vendorServices, setVendorServices] = useState([
-    {
-      serviceName: "Frontal Installation",
-      duration: "45mins",
-      price: "50,000",
-      description:
-        "Laying of frontal wigs, styling, revemaping and braiding of hair",
-    },
-  ]);
+  // const [vendorServices, setVendorServices] = useState([
+  //   {
+  //     serviceName: "Frontal Installation",
+  //     duration: "45mins",
+  //     price: "50,000",
+  //     description:
+  //       "Laying of frontal wigs, styling, revemaping and braiding of hair",
+  //   },
+  // ]);
 
-  const selectedUserType = "vendor";
-  const steps =
-    selectedUserType === "client" ? clientStepsData : vendorStepsData;
-  console.log(steps);
+  
+  // const selectedUserType: UserType = "vendor";
+  const [selectedUserType, setSelectedUserType] = useState<UserType>("vendor");
+  const steps = selectedUserType === "client"
+    ? clientStepsData
+    : vendorStepsData;
+
+  console.log(setSelectedUserType);
   console.log("currentstep", currentStep);
 
   const prevStep = () => {
@@ -57,6 +62,8 @@ const Onboarding = () => {
     Saturday: { enabled: false, start: "10:00 AM", end: "02:00 PM" },
     Sunday: { enabled: false, start: "10:00 AM", end: "02:00 PM" },
   });
+
+  console.log(setAvailability);
 
   return (
     <div className=" gap-y-8 h-screen flex flex-col">
