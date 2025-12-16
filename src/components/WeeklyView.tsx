@@ -22,30 +22,34 @@ const WeeklyView = ({
   return (
     <div className="border rounded-b">
       <div className="flex">
-        <div className="pt-10 border-r bg-muted ">
-          {hours.map((hour) => (
-            <div
-              className="whitespace-nowrap text-xs text-muted-foreground h-20 pl-4  "
-              key={hour}
-            >
-              {hour === 0
-                ? "12 AM"
-                : hour < 12
-                ? `${hour} AM`
-                : hour === 12
-                ? "12 PM"
-                : `${hour - 12} PM`}
-            </div>
-          ))}
+        <div className="">
+          <div className="h-10 bg-muted border-r" />
+          <div className=" border-r  bg-muted ">
+            {hours.map((hour) => (
+              <div
+                className="whitespace-nowrap text-xs text-muted-foreground h-20  pl-4"
+                key={hour}
+              >
+                {hour === 0
+                  ? "12 AM"
+                  : hour < 12
+                  ? `${hour} AM`
+                  : hour === 12
+                  ? "12 PM"
+                  : `${hour - 12} PM`}
+              </div>
+            ))}
+          </div>
         </div>
+
         <div className="w-full flex flex-col ">
-          <div className="grid grid-cols-7 border-b">
+          <div className="grid grid-cols-7 border-b h-10">
             {days.map((day) => {
               const today = new Date().toDateString() === day.toDateString();
               return (
                 <div
                   className={cn(
-                    "flex items-center justify-center border-r text-center py-3"
+                    "flex items-center justify-center border-r text-center"
                   )}
                   key={day.toISOString()}
                 >
@@ -68,73 +72,66 @@ const WeeklyView = ({
             })}
           </div>
 
-          <div className="w-full h-full grid grid-cols-7  ">
+          <div className="  w-full h-full grid grid-cols-7  ">
             {days.map((day) => {
-              //   const dailyAppointments = appointments.filter(
-              //     (appointment) =>
-              //       new Date(appointment?.date).toDateString() ===
-              //       day.toDateString()
-              //   );
+              const dayAppointments = appointments.filter(
+                (appointment) =>
+                  new Date(appointment.date).toDateString() ===
+                  day.toDateString()
+              );
               return (
-                <div className="w-full relative border-r" key={day.toISOString()}>
-                  {timeSlots.map((slot) => {
-                    const filteredApppointments = appointments.filter(
-                      (appointment) =>
-                        new Date(appointment.date).toDateString() ===
-                          day.toDateString() &&
-                        new Date(appointment?.startTime).getHours() === slot
-                    );
+                <div
+                  className="w-full relative border-r"
+                  key={day.toISOString()}
+                >
+                  {timeSlots.map((slot) => (
+                    <div
+                      className="h-10 pointer-events-none border-b  hover:bg-muted/50 cursor-pointer"
+                      key={`${day.toISOString()}-${slot}`}
+                    />
+                  ))}
+
+                  {dayAppointments.map((appointment) => {
+                    const category =
+                      serviceCategories[
+                        appointment?.serviceCategory as ServiceCategoryKey
+                      ];
+
+                    const startTime = new Date(appointment.startTime);
+                    const endTime = new Date(appointment.endTime);
+                    const startMinutes =
+                      startTime.getHours() * 60 + startTime.getMinutes();
+                    const endMinutes =
+                      endTime.getHours() * 60 + endTime.getMinutes();
+                    const durationMinutes = endMinutes - startMinutes;
+                    
+                    const HEADER_HEIGHT = 40;
+
+                    const topPosition =
+                      HEADER_HEIGHT + (startMinutes / 30) * 40;
+
+                    const height = (durationMinutes / 30) * 40;
 
                     return (
                       <div
-                        className="h-10 border-b  hover:bg-muted/50 cursor-pointer"
-                        key={slot}
+                        className={`absolute pointer-events-auto left-0 right-0 z-10 w-full rounded-[5px]  px-1.5 py-[1.6px] whitespace-nowrap  cursor-pointer`}
+                        style={{
+                          backgroundColor: category?.pastelColor,
+                          color: category?.color,
+                          borderColor: category?.color,
+                          borderWidth: ".5px",
+                          top: `${topPosition}px`,
+                          height: `${height}px`,                        
+                        }}
+                        key={appointment?.id}
                       >
-                        {filteredApppointments.map((appointment) => {
-                          const category =
-                            serviceCategories[
-                              appointment?.serviceCategory as ServiceCategoryKey
-                            ];
-
-                          const startTime = new Date(appointment.startTime);
-                          const endTime = new Date(appointment.endTime);
-                          const startMinutes =
-                            startTime.getHours() * 60 + startTime.getMinutes();
-                          const endMinutes =
-                            endTime.getHours() * 60 + endTime.getMinutes();
-                          const durationMinutes = endMinutes - startMinutes;
-                          const topPosition = (startMinutes / 30) * 40; 
-                          const height = (durationMinutes / 30) * 40;
-
-                          return (
-                            <div
-                              className={`absolute w-full rounded-[5px] px-1.5 py-[1.6px] whitespace-nowrap bg-[${category?.pastelColor}] cursor-pointer`}
-                              style={{
-                                backgroundColor: category?.pastelColor,
-                                color: category?.color,
-                                borderColor: category?.color,
-                                borderWidth: ".5px",
-                                top: `${topPosition}px`,
-                                height: `${height}px`,
-                              }}
-                            >
-                              <p className="font-bold truncate text-[8.5px] whitespace-nowrap">
-                                {appointment.serviceName}
-                              </p>
-                              <p className=" text-[8.5px] font-medium">
-                                {format(
-                                  new Date(appointment?.startTime),
-                                  "hh:mm a"
-                                )}{" "}
-                                -{" "}
-                                {format(
-                                  new Date(appointment?.endTime),
-                                  "hh:mm a"
-                                )}
-                              </p>
-                            </div>
-                          );
-                        })}
+                        <p className="font-bold truncate text-[8.5px] whitespace-nowrap">
+                          {appointment.serviceName}
+                        </p>
+                        <p className=" text-[8.5px] font-medium">
+                          {format(new Date(appointment?.startTime), "hh:mm a")}{" "}
+                          - {format(new Date(appointment?.endTime), "hh:mm a")}
+                        </p>
                       </div>
                     );
                   })}
@@ -150,50 +147,74 @@ const WeeklyView = ({
 
 export default WeeklyView;
 
-// {timeSlots.map((slot) => (
-//     <div
-//       className="h-10 border-b hover:bg-muted/50 cursor-pointer"
-//       key={slot}
-//     />
-//   ))}
+//  <div className="w-full h-full grid grid-cols-7">
+//             {days.map((day) => {
 
-//      {dailyAppointments.map((appointment) => {
-//     const startTime = new Date(appointment.startTime);
-//     const endTime = new Date(appointment.endTime);
+//               const dayAppointments = appointments.filter(
+//                 (appointment) =>
+//                   new Date(appointment.date).toDateString() ===
+//                   day.toDateString()
+//               );
 
-//     // Calculate position: hours * 2 slots + minutes/30
-//     const startMinutes = startTime.getHours() * 60 + startTime.getMinutes();
-//     const endMinutes = endTime.getHours() * 60 + endTime.getMinutes();
-//     const durationMinutes = endMinutes - startMinutes;
+//               return (
+//                 <div
+//                   className="w-full relative border-r"
+//                   key={day.toISOString()}
+//                 >
 
-//     // Each slot is h-10 (40px), representing 30 minutes
-//     const topPosition = (startMinutes / 30) * 40; // 40px per 30-min slot
-//     const height = (durationMinutes / 30) * 40;
+//                   {timeSlots.map((slot) => {
+//                     return (
+//                       <div
+//                         className="h-10 border-b hover:bg-muted/50 cursor-pointer"
+//                         key={slot}
+//                       />
+//                     );
+//                   })}
 
-//     const category =
-//       serviceCategories[
-//         appointment?.serviceCategory as ServiceCategoryKey
-//       ];
+//                   {dayAppointments.map((appointment) => {
+//                     const category =
+//                       serviceCategories[
+//                         appointment?.serviceCategory as ServiceCategoryKey
+//                       ];
 
-//     return (
-//       <div
-//         key={appointment.id}
-//         className="absolute left-0 right-0 mx-0.5 rounded-[5px] px-1.5 py-[1.6px] cursor-pointer overflow-hidden"
-//         style={{
-//           top: `${topPosition}px`,
-//           height: `${height}px`,
-//           backgroundColor: category?.pastelColor,
-//           color: category?.color,
-//           borderColor: category?.color,
-//           borderWidth: '0.5px',
-//         }}
-//       >
-//         <p className="font-bold truncate text-[8.5px] whitespace-nowrap">
-//           {appointment.serviceName}
-//         </p>
-//         <p className="text-[8.5px] font-medium">
-//           {format(startTime, "hh:mm a")} - {format(endTime, "hh:mm a")}
-//         </p>
-//       </div>
-//     );
-//   })}
+//                     const startTime = new Date(appointment.startTime);
+//                     const endTime = new Date(appointment.endTime);
+//                     const startMinutes =
+//                       startTime.getHours() * 60 + startTime.getMinutes();
+//                     const endMinutes =
+//                       endTime.getHours() * 60 + endTime.getMinutes();
+//                     const durationMinutes = endMinutes - startMinutes;
+
+//                     const slotsPassed = Math.floor(startMinutes / 30);
+//                     const topPosition = (startMinutes / 30) * 40 + slotsPassed;
+//                     const height = (durationMinutes / 30) * 40;
+
+//                     return (
+//                       <div
+//                         key={appointment.id}
+//                         className="absolute z-10 w-full rounded-[5px] px-1.5 py-[1.6px] whitespace-nowrap cursor-pointer"
+//                         style={{
+//                           backgroundColor: category?.pastelColor,
+//                           color: category?.color,
+//                           borderColor: category?.color,
+//                           borderWidth: ".5px",
+//                           top: `${topPosition}px`,
+//                           height: `${height}px`,
+//                           left: 0,
+//                           right: 0,
+//                         }}
+//                       >
+//                         <p className="font-bold truncate text-[8.5px] whitespace-nowrap">
+//                           {appointment.serviceName}
+//                         </p>
+//                         <p className="text-[8.5px] font-medium">
+//                           {format(new Date(appointment?.startTime), "hh:mm a")}{" "}
+//                           - {format(new Date(appointment?.endTime), "hh:mm a")}
+//                         </p>
+//                       </div>
+//                     );
+//                   })}
+//                 </div>
+//               );
+//             })}
+//           </div>

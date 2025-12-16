@@ -1,6 +1,7 @@
 export interface AppointmentData {
   id: string;
-  clientName: string;
+  clientFirstName: string;
+  clientLastName: string;
   clientPhone: string;
   clientEmail?: string;
   serviceId: string;
@@ -18,5 +19,6 @@ export interface AppointmentData {
 };
 
 export type UserType = "client" | "vendor";
+
 
 

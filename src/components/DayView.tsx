@@ -1,11 +1,16 @@
-const DayView = ({ currentDate }: { currentDate: Date }) => {
+import { serviceCategories, type ServiceCategoryKey } from "@/models/data";
+import type { AppointmentData } from "@/models/interface";
+import { format } from "date-fns";
+
+const DayView = ({
+  currentDate,
+  appointments,
+}: {
+  currentDate: Date;
+  appointments: AppointmentData[];
+}) => {
   const hours = Array.from({ length: 24 }, (_, i) => i);
-//   const days = Array.from({ length: 7 }, (_, i) => {
-//     const date = new Date(currentDate);
-//     date.setDate(currentDate.getDate() + i);
-//     return date;
-//   });
-console.log(currentDate)
+    console.log(currentDate);
   return (
     <div className="border rounded-b">
       <div className="flex">
@@ -29,12 +34,63 @@ console.log(currentDate)
         <div className="w-full mt-20">
           <div className="">
             {hours.map((slot) => {
-                // const filteredApppointments = 
+              const filteredApppointments = appointments.filter(
+                (appointment) => {
+                  const appointmentStartTime = new Date(appointment.startTime);
+                  const appointmentTime = appointmentStartTime.getHours();
+                  return appointmentTime === slot;
+                }
+              );
               return (
                 <div
-                  className="h-20 border-t  hover:bg-muted/50 cursor-pointer"
+                  className="relative h-20 border-t  hover:bg-muted/50 cursor-pointer"
                   key={slot}
-                ></div>
+                >
+                  {filteredApppointments.map((appointment) => {
+                    const category =
+                      serviceCategories[
+                        appointment?.serviceCategory as ServiceCategoryKey
+                      ];
+                    const startTime = new Date(appointment.startTime);
+                    const endTime = new Date(appointment.endTime);
+                    const startMinutes =
+                      startTime.getHours() * 60 + startTime.getMinutes();
+                    const endMinutes =
+                      endTime.getHours() * 60 + endTime.getMinutes();
+                    const durationMinutes = endMinutes - startMinutes;
+                    const HOUR_HEIGHT = 80;
+                    const minutesInTheHour = startTime.getMinutes();
+
+                    const topPosition = (minutesInTheHour / 60) * HOUR_HEIGHT;
+
+                    const height = (durationMinutes / 60) * HOUR_HEIGHT;
+
+                    return (
+                      <div
+                        className={`absolute left-0 right-0 z-10 w-full rounded-[5px] px-1.5 py-[1.6px] whitespace-nowrap  cursor-pointer`}
+                        style={{
+                          backgroundColor: category?.pastelColor,
+                          color: category?.color,
+                          borderColor: category?.color,
+                          borderWidth: ".5px",
+                          top: `${topPosition}px`,
+                          height: `${height}px`,
+                          left: 0,
+                          right: 0,
+                        }}
+                        key={appointment.id}
+                      >
+                        <p className="font-bold truncate text-[8.5px] whitespace-nowrap">
+                          {appointment.serviceName}
+                        </p>
+                        <p className=" text-[8.5px] font-medium">
+                          {format(new Date(appointment?.startTime), "hh:mm a")}{" "}
+                          - {format(new Date(appointment?.endTime), "hh:mm a")}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
               );
             })}
           </div>

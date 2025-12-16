@@ -8,7 +8,7 @@ const VendorDashboard = () => {
     { name: "Service Type" },
     { name: "Date" },
     { name: "Time" },
-    // { name: "Status" },
+    { name: "" },
   ];
   return (
     <div className="grid gap-y-6">
@@ -40,8 +40,8 @@ const VendorDashboard = () => {
         <h2 className="pb-4">Upcoming Appointments</h2>
         <div className="overflow-x">
           <table className=" w-full table-auto divide-y ">
-            <thead className="bg-[#F9FAFB] w-full">
-              <tr>
+            <thead className="bg-[#F9FAFB]  w-full">
+              <tr className="bg-[#F9FAFB] ">
                 {tableTitle.map((title) => (
                   <th
                     scope="col"
@@ -56,7 +56,7 @@ const VendorDashboard = () => {
               </tr>
             </thead>
 
-            <tbody>
+            <tbody className="divide-y leading-6">
               {appointments.map((appointment) => (
                 <tr key={appointment?.lastName}>
                   <td className="size-px whitespace-nowrap font-normal">
@@ -67,37 +67,37 @@ const VendorDashboard = () => {
                           .toUpperCase()}${appointment?.lastName
                           .charAt(0)
                           .toUpperCase()}`}
-                        className="w-8 h-8 text-sm font-semibold"
+                        className="w-8 h-8 text-xs font-semibold"
                       />
-                      <span className="text-sm text-grey-50 truncate">
+                      <span className="text-xs text-grey-50 truncate">
                         {appointment?.firstName} {appointment?.lastName}
                       </span>
                     </div>
                   </td>
                   <td className="size-px whitespace-nowrap font-normal">
                     <div className="px-6 py-3 truncate">
-                      <span className="text-sm text-grey-50 truncate">
+                      <span className="text-xs text-grey-50 truncate">
                         {appointment?.email}
                       </span>
                     </div>
                   </td>
                   <td className="size-px whitespace-nowrap font-normal">
                     <div className="px-6 py-3 truncate">
-                      <span className="text-sm text-grey-50 truncate">
+                      <span className="text-xs text-grey-50 truncate">
                         {appointment?.serviceType}
                       </span>
                     </div>
                   </td>
                   <td className="size-px whitespace-nowrap font-normal">
                     <div className="px-6 py-3 truncate">
-                      <span className="text-sm text-grey-50 truncate">
+                      <span className="text-xs text-grey-50 truncate">
                         {appointment?.date}
                       </span>
                     </div>
                   </td>
                   <td className="size-px whitespace-nowrap font-normal">
                     <div className="px-6 py-3 truncate">
-                      <span className="text-sm text-grey-50 truncate">
+                      <span className="text-xs text-grey-50 truncate">
                         {appointment?.startTime} - {appointment?.endTime}
                       </span>
                     </div>

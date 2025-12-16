@@ -65,17 +65,19 @@ const MonthView = ({
                 "min-h-[150px] pt-2 px-2 flex flex-col  border font-medium text-sm",
                 isCurrentMonth ? "bg-white" : "bg-muted text-muted-foreground"
               )}
+              key={day.toDateString()}
             >
-              <div
-                className={cn(
-                  " flex flex-col gap-y-1",
-                  isToday &&
-                    "bg-primary-blue rounded-full text-center h-6 w-6 text-white  text-sm"
-                )}
-              >
-                {day.getDate()}
-                <div className="flex flex-col gap-y-1.5">
-                  
+              <div className=" flex flex-col gap-y-1">
+                <div
+                  className={cn(
+                    isToday &&
+                      "bg-primary-blue rounded-full text-center h-6 w-6 text-white  text-sm"
+                  )}
+                >
+                  {day.getDate()}
+                </div>
+
+                <div className=" flex flex-col gap-y-1.5">
                   {dailyAppointments.map((appointment) => {
                     const category =
                       serviceCategories[
@@ -84,7 +86,7 @@ const MonthView = ({
                     return (
                       <div
                         key={appointment.id}
-                        className={`flex items-center justify-between whitespace-nowrap bg-[${category?.pastelColor}] cursor-pointer px-1.5 py-[1.6px] gap-x-2  rounded-[6px]  border border-[${category?.color}]
+                        className={`flex items-center justify-between whitespace-nowrap cursor-pointer px-1.5 py-[1.6px] gap-x-2  rounded-[6px]  border border-[${category?.color}]
                        text-[${category.color}]`}
                         style={{
                           backgroundColor: category?.pastelColor,
@@ -95,6 +97,7 @@ const MonthView = ({
                         <p className="font-bold truncate text-[8.5px] whitespace-nowrap">
                           {appointment.serviceName}
                         </p>
+                  
                         <p className=" text-[8.5px] font-medium">
                           {format(new Date(appointment?.startTime), "hh:mm a")}
                         </p>
