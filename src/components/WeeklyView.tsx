@@ -2,6 +2,8 @@ import { cn } from "@/lib/utils";
 import { serviceCategories, type ServiceCategoryKey } from "@/models/data";
 import type { AppointmentData } from "@/models/interface";
 import { format } from "date-fns";
+import { Dialog, DialogTrigger } from "./ui/dialog";
+import AppointmentDetailsModal from "./AppointmentDetailsModal";
 
 const WeeklyView = ({
   currentDate,
@@ -113,7 +115,9 @@ const WeeklyView = ({
                     const height = (durationMinutes / 30) * 40;
 
                     return (
-                      <div
+                      <Dialog>
+                        <DialogTrigger asChild>
+ <div
                         className={`absolute pointer-events-auto left-0 right-0 z-10 w-full rounded-[5px]  px-1.5 py-[1.6px] whitespace-nowrap  cursor-pointer`}
                         style={{
                           backgroundColor: category?.pastelColor,
@@ -133,6 +137,11 @@ const WeeklyView = ({
                           - {format(new Date(appointment?.endTime), "hh:mm a")}
                         </p>
                       </div>
+                        </DialogTrigger>
+              <AppointmentDetailsModal appointmentId={appointment.id}/>
+                      </Dialog>
+                     
+        
                     );
                   })}
                 </div>

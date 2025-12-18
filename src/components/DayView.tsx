@@ -1,6 +1,8 @@
 import { serviceCategories, type ServiceCategoryKey } from "@/models/data";
 import type { AppointmentData } from "@/models/interface";
 import { format } from "date-fns";
+import { Dialog, DialogTrigger } from "./ui/dialog";
+import AppointmentDetailsModal from "./AppointmentDetailsModal";
 
 const DayView = ({
   currentDate,
@@ -66,7 +68,9 @@ const DayView = ({
                     const height = (durationMinutes / 60) * HOUR_HEIGHT;
 
                     return (
-                      <div
+                      <Dialog>
+                        <DialogTrigger asChild>
+                             <div
                         className={`absolute left-0 right-0 z-10 w-full rounded-[5px] px-1.5 py-[1.6px] whitespace-nowrap  cursor-pointer`}
                         style={{
                           backgroundColor: category?.pastelColor,
@@ -79,6 +83,7 @@ const DayView = ({
                           right: 0,
                         }}
                         key={appointment.id}
+
                       >
                         <p className="font-bold truncate text-[8.5px] whitespace-nowrap">
                           {appointment.serviceName}
@@ -88,6 +93,12 @@ const DayView = ({
                           - {format(new Date(appointment?.endTime), "hh:mm a")}
                         </p>
                       </div>
+                        </DialogTrigger>
+
+                        <AppointmentDetailsModal appointmentId={appointment.id}/>
+
+                      </Dialog>
+                     
                     );
                   })}
                 </div>

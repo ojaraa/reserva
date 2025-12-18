@@ -2,6 +2,9 @@ import { cn } from "@/lib/utils";
 import { serviceCategories, type ServiceCategoryKey } from "@/models/data";
 import type { AppointmentData } from "@/models/interface";
 import { format } from "date-fns";
+import { Dialog, DialogTrigger } from "./ui/dialog";
+import AppointmentDetailsModal from "./AppointmentDetailsModal";
+import ExtraMonthlyAppointments from "./ExtraMonthlyAppointments";
 // import { useState } from "react";
 
 const MonthView = ({
@@ -77,33 +80,55 @@ const MonthView = ({
                   {day.getDate()}
                 </div>
 
-                <div className=" flex flex-col gap-y-1.5">
-                  {dailyAppointments.map((appointment) => {
+                <div className=" flex flex-col gap-y-0.5">
+                  {dailyAppointments.slice(0, 3).map((appointment) => {
                     const category =
                       serviceCategories[
                         appointment.serviceCategory as ServiceCategoryKey
                       ];
                     return (
-                      <div
-                        key={appointment.id}
-                        className={`flex items-center justify-between whitespace-nowrap cursor-pointer px-1.5 py-[1.6px] gap-x-2  rounded-[6px]  border border-[${category?.color}]
+                      <Dialog>
+                        <DialogTrigger>
+                          <div
+                            key={appointment.id}
+                            className={`flex items-center justify-between whitespace-nowrap cursor-pointer px-1.5 py-[1.6px] gap-x-2  rounded-[6px]  border border-[${category?.color}]
                        text-[${category.color}]`}
-                        style={{
-                          backgroundColor: category?.pastelColor,
-                          borderColor: category?.color,
-                          color: category?.color,
-                        }}
-                      >
-                        <p className="font-bold truncate text-[8.5px] whitespace-nowrap">
-                          {appointment.serviceName}
-                        </p>
-                  
-                        <p className=" text-[8.5px] font-medium">
-                          {format(new Date(appointment?.startTime), "hh:mm a")}
-                        </p>
-                      </div>
+                            style={{
+                              backgroundColor: category?.pastelColor,
+                              borderColor: category?.color,
+                              color: category?.color,
+                            }}
+                          >
+                            <p className="font-bold truncate text-[8.5px] whitespace-nowrap">
+                              {appointment.serviceName}
+                            </p>
+
+                            <p className=" text-[8.5px] font-medium">
+                              {format(
+                                new Date(appointment?.startTime),
+                                "hh:mm a"
+                              )}
+                            </p>
+                          </div>
+                        </DialogTrigger>
+                        <AppointmentDetailsModal
+                          appointmentId={appointment.id}
+                        />
+                      </Dialog>
                     );
                   })}
+
+                  {dailyAppointments.length > 3 && (
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <p className=" text-[8.5px] text-muted-foreground font-medium cursor-pointer">
+                          +{dailyAppointments.length - 3} more
+                        </p>
+                      </DialogTrigger>
+
+                      <ExtraMonthlyAppointments day={day} appointments={dailyAppointments.slice(3)} />
+                    </Dialog>
+                  )}
                 </div>
               </div>
             </div>
