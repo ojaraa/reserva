@@ -14,7 +14,6 @@ import {
   LayoutDashboardIcon,
   LogOut,
   Server,
-  Users,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "../ui/button";
@@ -101,9 +100,9 @@ const vendorSidebarItems = [
     url: "/vendor/services",
     icon: Server,
   },
-  {
-    label: "Clients",
-    url: "/vendor/clients",
-    icon: Users,
-  },
+  // {
+  //   label: "Clients",
+  //   url: "/vendor/clients",
+  //   icon: Users,
+  // },
 ];

@@ -4,6 +4,8 @@ import Onboarding from "@/pages/onboarding";
 import SignUp from "@/pages/signup";
 import BookingDetails from "@/pages/vendor/booking-details";
 import Bookings from "@/pages/vendor/bookings";
+import ServiceDetails from "@/pages/vendor/service-details";
+import VendorServices from "@/pages/vendor/services";
 import VendorCalendar from "@/pages/vendor/vendor-calendar";
 import VendorDashboard from "@/pages/vendor/vendor-dashboard";
 import { createBrowserRouter } from "react-router-dom";
@@ -45,7 +47,16 @@ const router = createBrowserRouter([
       },
       {
         path: "services",
-        element: <div>Vendor Services Page</div>,
+        children: [
+            {
+                path: "",
+                element: <VendorServices/>,
+            },
+            {
+                path: ":id",
+                element: <ServiceDetails/>
+            }
+        ],
       },
       {
         path: "calendar",

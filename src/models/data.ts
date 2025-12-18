@@ -1027,3 +1027,104 @@ export const AppointmentStatus = {
     color:"#0F973D",
   },
 }
+
+
+
+export const vendorServices  = [
+  // HAIR
+  {
+    serviceId: 101,
+    serviceName: "Knotless Braids (Medium/Long)",
+    serviceCategory: "HAIR",
+    status: "INACTIVE",
+    duration: 300,
+    price: 25000,
+    description: "Achieve a lightweight, natural-looking finish with our signature tension-free knotless technique. This style is perfect for protecting your edges and ensuring comfort for weeks. We provide a thorough scalp oiling finish to give your braids a fresh, shiny glow. Please note that extensions are not included in the price, but can be provided upon request for an additional fee."
+  },
+  {
+    serviceId: 102,
+    serviceName: "Stitch Cornrows",
+    serviceCategory: "HAIR",
+    status: "ACTIVE",
+    duration: 150,
+    price: 15000,
+    description: "Precision-crafted stitch lines designed to give you a clean, sleek, and trendy look. This service includes a pre-braid hair stretch and the use of high-quality edge control to ensure your lines stay crisp and frizz-free. Perfect for both casual outings and professional settings."
+  },
+
+  // MAKEUP
+  {
+    serviceId: 201,
+    serviceName: "Owambe Glam + Gele Tying",
+    serviceCategory: "MAKEUP",
+    status: "ACTIVE",
+    duration: 120,
+    price: 25000,
+    description: "The ultimate party-ready transformation featuring a full-coverage 'skin-finish' makeup application. This package includes expert eyebrow carving, 3D mink lashes, and professional Gele styling (Auto-Gele or traditional tying). We use sweat-proof products to ensure your look survives the Nigerian party heat and stays flawless all day long."
+  },
+
+  // WIGS
+  {
+    serviceId: 401,
+    serviceName: "Wig Revamp & Treatment",
+    serviceCategory: "WIGS",
+    status: "INACTIVE",
+    duration: 50, 
+    price: 12000,
+    description: "Give your old hair a second life. Our comprehensive revamp includes a deep conditioning steam treatment to restore moisture, professional detangling, lace cleaning to remove old glue residue, and a fresh style of your choice (bone straight or bouncy curls). Your wig will return smelling amazing and looking brand new."
+  },
+
+  // BARBING
+  {
+    serviceId: 901,
+    serviceName: "Executive Haircut & Beard Treatment",
+    serviceCategory: "BARBING",
+    status: "ACTIVE",
+    duration: 60,
+    price: 7000,
+    description: "A premium grooming experience featuring a precision fade or traditional cut tailored to your face shape. This executive service includes a hot towel treatment, beard trimming with a straight razor for crisp lines, and a soothing aftershave massage to prevent bumps and irritation. Perfect for the modern gentleman."
+  },
+
+  // NAILS
+  {
+    serviceId: 301,
+    serviceName: "Acrylic Full Set + 3D Nail Art",
+    serviceCategory: "NAILS",
+    status: "ACTIVE",
+    duration: 120,
+    price: 18000,
+    description: "Transform your hands with a durable acrylic extension set. This service includes detailed cuticle work, tip application, and custom nail art ranging from ombre effects to 3D charms or hand-painted designs. We finish with a high-shine gel top coat and nourishing cuticle oil for a salon-perfect look."
+  },
+
+  // SKINCARE
+  {
+    serviceId: 701,
+    serviceName: "Deep Cleansing 'Glow' Facial",
+    serviceCategory: "SKINCARE",
+    status: "ACTIVE",
+    duration: 90,
+    price: 35000,
+    description: "Specifically designed for skin exposed to urban pollution, this facial involves deep pore vacuuming, manual extractions, and a brightening enzyme peel. We use professional-grade serums to target hyperpigmentation and uneven skin tone, leaving your face feeling refreshed, hydrated, and visibly glowing."
+  },
+
+  // TATTOO / HENNA
+  {
+    serviceId: 1301,
+    serviceName: "Bridal Henna (Sudanese/Northern Style)",
+    serviceCategory: "TATTOO",
+    status: "ACTIVE",
+    duration: 180,
+    price: 15000,
+    description: "Intricate, hand-drawn traditional Henna (Laali) designs for hands and feet. We use organic, dark-staining henna paste that is safe for the skin. Whether you want a contemporary floral pattern or a heavy traditional bridal design, our artists ensure a deep, rich color that lasts for weeks."
+  },
+
+  // SPA
+  {
+    serviceId: 3801,
+    serviceName: "Stress-Relief Deep Tissue Massage",
+    serviceCategory: "SPA",
+    status: "ACTIVE",
+    duration: 75,
+    price: 25000,
+    description: "Eliminate body aches and muscle tension caused by the daily hustle. Our therapists focus on realigning deeper layers of muscles and connective tissue using therapeutic essential oils. This session is designed to improve circulation, reduce stress, and promote total body relaxation."
+  }
+];
