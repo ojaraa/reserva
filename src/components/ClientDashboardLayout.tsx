@@ -7,8 +7,8 @@ const ClientDashboardLayout = () => {
   return (
      <SidebarProvider>
       <ClientSidebar />
-      <main className="min-h-screen w-full ">
-        <div className="flex  justify-between items-center p-4 border-b">
+      <main className="min-h-screen w-full bg-[#fdfdfe]">
+        <div className="flex  justify-between items-center p-4 border-b ">
           <SidebarTrigger />
           <CustomAvatar src="" fallback="OJ" className="cursor-pointer font-semibold" />
         </div>
@@ -21,5 +21,6 @@ const ClientDashboardLayout = () => {
     </SidebarProvider>
   )
 }
+// 
 
 export default ClientDashboardLayout

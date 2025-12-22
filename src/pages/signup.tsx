@@ -45,7 +45,9 @@ const SignUp = () => {
               placeholder="••••••••"
             />
 
-            <Button className="py-5 mt-2">Sign Up</Button>
+            <Button className="py-5 mt-2" onClick={() => navigate("/onboarding")}>Sign Up</Button>
+    
+            
           </div>
 
           <div className="flex items-center gap-x-3 w-[70%] mx-auto">

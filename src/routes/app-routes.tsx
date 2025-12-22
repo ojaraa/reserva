@@ -1,6 +1,9 @@
 import ClientDashboardLayout from "@/components/ClientDashboardLayout";
 import VendorDashboardLayout from "@/components/VendorDashboardLayout";
+import CllientAppointments from "@/pages/client/client-appointments";
+import ClientCalendar from "@/pages/client/client-calendar";
 import ClientDashboard from "@/pages/client/client-dashboard";
+import ClientVendorList from "@/pages/client/client-vendor-list";
 import LandingPage from "@/pages/landing-page";
 import Onboarding from "@/pages/onboarding";
 import SignUp from "@/pages/signup";
@@ -73,7 +76,20 @@ const router = createBrowserRouter([
         {
             path: "dashboard",
             element: <ClientDashboard/>
+        },
+        {
+            path:"appointments",
+            element: <CllientAppointments/>
+        },
+        {
+            path:"calendar",
+            element: <ClientCalendar/>
+        },
+        {
+            path:"vendors",
+            element: <ClientVendorList/>
         }
+
     ]
   },
   { path: "*", element: <div>404 – Page not found</div> },

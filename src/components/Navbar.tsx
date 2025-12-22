@@ -1,15 +1,12 @@
 // import { LandPlot } from "lucide-react"
 
-
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 
-const Navbar = ({showNavLink} : {showNavLink: boolean}) => {
- 
-
+const Navbar = ({ showNavLink }: { showNavLink: boolean }) => {
   return (
     <div className="flex items-center justify-between p-6">
-      <Link to={'/'} className="flex gap-x-1 items-center">
+      <Link to={"/"} className="flex gap-x-1 items-center">
         <h2 className="text-2xl">reserva</h2>
       </Link>
 
@@ -22,8 +19,9 @@ const Navbar = ({showNavLink} : {showNavLink: boolean}) => {
               <li className="">Contact</li>
             </ul>
           </nav>
-
-          <Button>Login</Button>
+          <Link to="signup">
+            <Button>Login</Button>
+          </Link>
         </div>
       )}
     </div>
