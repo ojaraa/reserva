@@ -1,4 +1,6 @@
+import ClientDashboardLayout from "@/components/ClientDashboardLayout";
 import VendorDashboardLayout from "@/components/VendorDashboardLayout";
+import ClientDashboard from "@/pages/client/client-dashboard";
 import LandingPage from "@/pages/landing-page";
 import Onboarding from "@/pages/onboarding";
 import SignUp from "@/pages/signup";
@@ -63,6 +65,16 @@ const router = createBrowserRouter([
         element: <VendorCalendar />,
       },
     ],
+  },
+  {
+    path: "client",
+    element: <ClientDashboardLayout/>,
+    children: [
+        {
+            path: "dashboard",
+            element: <ClientDashboard/>
+        }
+    ]
   },
   { path: "*", element: <div>404 – Page not found</div> },
 ]);

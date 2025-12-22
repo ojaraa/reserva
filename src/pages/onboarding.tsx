@@ -20,25 +20,12 @@ import type { UserType } from "@/models/interface";
 
 const Onboarding = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const navigate = useNavigate()
-  // const [vendorServices, setVendorServices] = useState([
-  //   {
-  //     serviceName: "Frontal Installation",
-  //     duration: "45mins",
-  //     price: "50,000",
-  //     description:
-  //       "Laying of frontal wigs, styling, revemaping and braiding of hair",
-  //   },
-  // ]);
+  const navigate = useNavigate();
 
-  
-  // const selectedUserType: UserType = "vendor";
   const [selectedUserType, setSelectedUserType] = useState<UserType>("vendor");
-  const steps = selectedUserType === "client"
-    ? clientStepsData
-    : vendorStepsData;
+  const steps =
+    selectedUserType === "client" ? clientStepsData : vendorStepsData;
 
-  console.log(setSelectedUserType);
   console.log("currentstep", currentStep);
 
   const prevStep = () => {
@@ -87,7 +74,8 @@ const Onboarding = () => {
               <RadioGroupPrimitive.Root className="grid grid-cols-2 gap-x-8 ">
                 {userType.map((type) => (
                   <RadioGroupPrimitive.Item
-                    value={""}
+                    value={type.value}
+                    onClick={() => setSelectedUserType(type.value as UserType)}
                     className="grid gap-y-2 text-start py-4 pt-6 px-5 cursor-pointer border border-placeholder data-[state=checked]:border-primary-blue)] data-[state=checked]:bg-[hsl(218,100%,97%)] hover:border-primary-blue rounded-md "
                     key={type.id}
                   >
@@ -105,7 +93,7 @@ const Onboarding = () => {
           </div>
         )}
 
-        {steps[currentStep].id === 1 && (
+        {steps[currentStep].id === 1 && selectedUserType === "vendor" ? (
           <div className="grid gap-y-6 w-[40vw]">
             <div className="grid gap-y-2">
               <h1 className="text-2xl font-medium">
@@ -150,9 +138,50 @@ const Onboarding = () => {
               </div>
             </div>
           </div>
+        ) : (
+          steps[currentStep].id === 1 &&
+          selectedUserType === "client" && (
+            <div className="grid gap-y-6 w-[40vw] ">
+              <div className="grid gap-y-2">
+                <h1 className="text-2xl font-medium">Set up your experience</h1>
+                <p className="text-muted-foreground">
+                  Personalize your recommendations by telling us what you are
+                  looking for, you can always change it later.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-x-2.5 gap-y-3 ">
+                {Object.values(serviceCategories).map((service) => (
+                  <label key={service.id} className="inline-block">
+                    <input
+                      type="checkbox"
+                      name="services"
+                      value={service.name}
+                      className="hidden peer"
+                    />
+                    <span
+                      className="px-4 py-1.5 rounded-[6px] text-sm font-medium cursor-pointer transition-colors inline-block
+            peer-checked:bg-primary-blue peer-checked:text-white peer-checked:hover:bg-primary-blue
+            bg-white text-gray-700 border hover:bg-gray-50"
+                    >
+                      {service?.name}
+                    </span>
+                  </label>
+                ))}
+              </div>
+
+              <div className="flex justify-between mt-4">
+                <Button variant="ghost" onClick={prevStep}>
+                  Skip for now
+                </Button>
+
+                <Button onClick={() => navigate("/client/dashboard")}>Finish Setup</Button>
+              </div>
+            </div>
+          )
         )}
 
-        {steps[currentStep].id === 2 && (
+        {steps[currentStep].id === 2 && selectedUserType === "vendor" && (
           <div className="grid gap-y-6 w-[40vw]">
             <div className="grid gap-y-2">
               <h1 className="text-2xl font-medium">Add your services</h1>
@@ -435,9 +464,8 @@ const Onboarding = () => {
                   Back
                 </Button>
                 <Button
-                //   type="button"
-                    onClick={() => navigate("/vendor/dashboard")}
-                  
+                  //   type="button"
+                  onClick={() => navigate("/vendor/dashboard")}
                 >
                   Complete setup
                 </Button>
@@ -476,11 +504,6 @@ const categories = [
   { value: "other", label: "Other" },
 ];
 
-
-
-
-
-
 const vendorStepsData = [
   {
     id: 0,
@@ -517,7 +540,7 @@ const clientStepsData = [
   },
   {
     id: 1,
-    step: 2,
+    step: 1,
     title: "Choose Preferences",
   },
 ];
@@ -529,11 +552,13 @@ const userType = [
     description:
       "Book and manage appointments with your favorite professionals.",
     icon: <UserRound />,
+    value: "client",
   },
   {
     id: 2,
     title: "I am a Business Owner",
     description: "Manage your appointments, services and clients.",
     icon: <BriefcaseBusiness />,
+    value: "vendor",
   },
 ];

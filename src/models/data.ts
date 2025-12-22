@@ -121,12 +121,12 @@ export const serviceCategories  ={
     },
     CONSULTATION: {
         id: 19,
-        name:"Beauty Consultation",
+        name:" Consultation",
         color: "#F59E0B",
         pastelColor: "#FEF3C7"
     },
     OTHER: {
-        id: 19,
+        id: 29,
         name:"Other",
         color: "#6B7280",
         pastelColor: "#F3F4F6"
