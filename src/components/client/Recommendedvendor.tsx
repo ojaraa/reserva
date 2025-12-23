@@ -1,9 +1,10 @@
 import { vendors } from "@/models/data";
 import { Button } from "../ui/button";
 import { HiStar } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Recommendedvendor = () => {
+    const navigate = useNavigate();
   return (
     <div className="space-y-4">
      <div className="flex items-center justify-between">
@@ -13,7 +14,7 @@ const Recommendedvendor = () => {
      </div>
       <div className="grid grid-cols-2  gap-5">
         {vendors.slice(0, 2).map((vendor) => (
-          <div className="px-3 py-5 shadow-sm rounded-[5px]" key={vendor.id}>
+          <div className="px-3 py-5 bg-white rounded-[6px]" key={vendor.id}>
             <h4 className="font-medium text-sm leading-7 ">{vendor?.businessName}</h4>
             <p className="text-muted-foreground text-xs">
               {vendor?.businessCategory}
@@ -23,7 +24,7 @@ const Recommendedvendor = () => {
                 <p className="text-xs">{vendor?.rating}</p>
             </div>
             <div className="flex items-center gap-x-2  mt-3">
-              <Button variant="outline" size="sm" className="text-xs">
+              <Button variant="outline" size="sm" className="text-xs" onClick={() => navigate(`/client/vendors/${vendor.id}`)}>
                 View Profile
               </Button>
 

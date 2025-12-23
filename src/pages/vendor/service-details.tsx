@@ -16,7 +16,7 @@ const ServiceDetails = () => {
   const serviceDetail = vendorServices.find(
     (service) => service.serviceId === Number(id)
   );
-  console.log(serviceDetail);
+
   return (
     <div className="grid gap-y-6">
       <Link

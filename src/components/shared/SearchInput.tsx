@@ -6,12 +6,14 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: boolean;
   placeholder?: string;
+  borderClass?: string;
 }
 
 const SearchInput = ({
   label,
   error,
   placeholder,
+  borderClass,
   ...props
 }: InputProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,7 +22,7 @@ const SearchInput = ({
   };
   return (
     <div
-      className={`grid w-full max-w-[291px] items-center gap-1 border border-[#D0D5DD] rounded-[6px] pl-3`}
+      className={`grid w-full max-w-[291px] items-center gap-1 border border-[#D0D5DD] rounded-[6px] pl-3 ${borderClass}`}
     >
       <Label className="font-bold leading-6" htmlFor={label}>
         {label}
