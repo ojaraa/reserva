@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { vendors } from "@/models/data";
-import { ArrowLeft } from "lucide-react";
+// import { ArrowLeft } from "lucide-react";
 import { GiSandsOfTime } from "react-icons/gi";
 import { IoMdPricetag } from "react-icons/io";
 import { TbCategory } from "react-icons/tb";
-import { Link, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 
 const VendorServiceDetail = () => {
   const { serviceId } = useParams();
@@ -12,13 +12,13 @@ const VendorServiceDetail = () => {
 //   .services.find((service) => service.serviceId === serviceId);
   return (
     <div className="grid gap-y-6 ">
-      <Link
-        to={`/client/vendor/services`}
+      {/* <Link
+        to={`/-1`}
         className="flex gap-x-1 items-center cursor-pointer font-medium"
       >
         <ArrowLeft className="text-muted-foreground  " size={12} />
         <p className="text-muted-foreground  e">Back to vendor</p>
-      </Link>
+      </Link> */}
 
       <div className="max-w-[65vw] shadow-xs p-6 rounded-md bg-white">
         <div className="flex items-center justify-between pb-1.5">
