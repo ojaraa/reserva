@@ -1,6 +1,6 @@
 # Reserva — Appointment Booking Platform 🗓️
 
-Reserva is a **service-based appointment booking web application** designed to connect **clients** with **service providers (vendors)** in a seamless and intuitive way.
+Reserva is a **service-based appointment booking and scheduling web application** designed to help **clients book services** and **vendors manage their time** using a structured, calendar-driven workflow.
 
 The app focuses on **real-world booking flows**, clean UX decisions, and scalable frontend architecture — similar to systems used by salons, consultants, clinics, and freelancers.
 
@@ -29,11 +29,12 @@ Many small service-based businesses struggle with:
 - Browse available service providers (vendors)
 - View vendor profiles and offered services
 - Book appointments based on selected services
-- View upcoming appointments in a client dashboard
+- View upcoming appointments in a client dashboard and calendar
 
 ### Vendor Features
 - List services offered with relevant details
 - View incoming and upcoming bookings
+- Manage bookings on calendar
 - Manage availability (conceptual flow implemented)
 - Access a vendor-specific dashboard
 
