@@ -1,5 +1,6 @@
 import ClientDashboardLayout from "@/components/ClientDashboardLayout";
 import VendorDashboardLayout from "@/components/VendorDashboardLayout";
+import BookAppointment from "@/pages/client/book-appointment";
 import CllientAppointments from "@/pages/client/client-appointments";
 import ClientCalendar from "@/pages/client/client-calendar";
 import ClientDashboard from "@/pages/client/client-dashboard";
@@ -7,6 +8,7 @@ import ClientVendorList from "@/pages/client/client-vendor-list";
 import VendorDetailsPage from "@/pages/client/vendor-details-page";
 import VendorServiceDetail from "@/pages/client/vendor-service-detail";
 import LandingPage from "@/pages/landing-page";
+import LoginPage from "@/pages/login";
 import Onboarding from "@/pages/onboarding";
 import SignUp from "@/pages/signup";
 import BookingDetails from "@/pages/vendor/booking-details";
@@ -30,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "/onboarding",
     element: <Onboarding />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
   },
   {
     path: "vendor",
@@ -104,6 +110,10 @@ const router = createBrowserRouter([
                         {
                             path: "services/:serviceId",
                             element: <VendorServiceDetail/>
+                        },
+                        {
+                          path:"book-appointment",
+                          element: <BookAppointment/>,
                         }
 
                     ],

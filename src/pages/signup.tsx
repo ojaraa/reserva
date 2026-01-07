@@ -1,53 +1,142 @@
-// import Navbar from "@/components/Navbar";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import FormInput from "@/components/shared/FormInput";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
+import { Controller, useForm } from "react-hook-form";
+import type z from "zod";
+import { signUpSchema } from "@/models/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import { auth } from "@/services/firebase.config";
 
 const SignUp = () => {
+
   const navigate = useNavigate();
+  const form = useForm<z.infer<typeof signUpSchema>>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+      firstName: "",
+      lastName: "",
+    },
+    mode: "onChange",
+  });
+
+  const { control, formState:{ errors, isSubmitting } } = form;
+
+  const handleSignUpWithEmail = async () => {
+    const { email, password } = form.getValues();
+    console.log(form.getValues());
+    // const isValid = await form.trigger();
+    // if (!isValid) return;
+    try {
+      const userData = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log(userData.user);
+      toast.success("Logged in successfully");
+      navigate("/onboarding");
+    } catch (error) {
+      console.log(error);
+      toast.error((error as { message: string }).message);
+    }
+  };
+
   return (
     <div className=" grid gap-y-4">
-      {/* <Navbar showNavLink={false} /> */}
       <Link to={"/"} className="pt-5 px-6 flex gap-x-1 items-center">
         <h2 className="text-2xl font-medium">reserva</h2>
       </Link>
       <div className="h-[90vh] grid grid-cols-2">
-        <div className="grid gap-y-4 px-30">
+        <form
+          onSubmit={form.handleSubmit(handleSignUpWithEmail)}
+          className="grid gap-y-4 px-30"
+        >
           <h1 className="font-medium text-2xl">Create your account</h1>
           <div className="  grid gap-y-3 ">
             <div className="grid  grid-cols-2 gap-x-3">
-              <FormInput
-                type="text"
-                label="First Name"
-                placeholder="First Name"
+              <Controller
+                name="firstName"
+                control={control}
+                render={({ field,  fieldState  }) => (
+                  <FormInput
+                    type="text"
+                    label="First Name"
+                    placeholder="First Name"
+                    dataInvalid={fieldState.invalid}
+                    {...field}
+                    error={errors?.firstName?.message}
+                  />
+                )}
               />
 
-              <FormInput
-                type="text"
-                label="Last Name"
-                placeholder="Last Name"
+              <Controller
+                name="lastName"
+                control={control}
+                render={({ field }) => (
+                  <FormInput
+                    type="text"
+                    label="Last Name"
+                    placeholder="Last Name"
+                    {...field}
+                    error={errors?.lastName?.message}
+                  />
+                )}
               />
             </div>
-            <FormInput
-              type="email"
-              label="Email Address"
-              placeholder="Email Address"
-            />
-            <FormInput
-              type="password"
-              label="Password"
-              placeholder="••••••••"
-            />
-
-            <FormInput
-              type="password"
-              label="Confirm Password"
-              placeholder="••••••••"
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <FormInput
+                  type="email"
+                  label="Email Address"
+                  placeholder="Email Address"
+                  {...field}
+                  error={errors?.email?.message}
+                />
+              )}
             />
 
-            <Button className="py-5 mt-2" onClick={() => navigate("/onboarding")}>Sign Up</Button>
-    
-            
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <FormInput
+                  type="password"
+                  label="Password"
+                  placeholder="••••••••"
+                  {...field}
+                  error={errors?.password?.message}
+                />
+              )}
+            />
+
+            <Controller
+              name="confirmPassword"
+              control={control}
+              render={({ field }) => (
+                <FormInput
+                  type="password"
+                  label="Confirm  Password"
+                  placeholder="••••••••"
+                  {...field}
+                  error={errors?.confirmPassword?.message}
+                />
+              )}
+            />
+
+            <Button
+              className="py-5 mt-2"
+              type="submit"
+                disabled={isSubmitting}
+            >
+              {isSubmitting ? "Signing Up..." : "Sign Up"}
+            </Button>
           </div>
 
           <div className="flex items-center gap-x-3 w-[70%] mx-auto">
@@ -58,7 +147,8 @@ const SignUp = () => {
 
           <Button
             className="w-full bg-white border hover:bg-gray-100 text-black"
-            onClick={() => navigate("/onboarding")}
+            // onClick={() => navigate("/onboarding")}
+            disabled={isSubmitting}
           >
             <img
               src={`/assets/images/google.png`}
@@ -77,7 +167,7 @@ const SignUp = () => {
               </Link>
             </p>
           </div>
-        </div>
+        </form>
 
         <div className="h-full  rounded-2xl">
           <img

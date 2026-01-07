@@ -37,7 +37,7 @@ const BookingDetails = () => {
         </div>
       </div>
 
-      <div className="grid w-full  max-w-[75vw] whitespace-nowrap gap-y-4 py-4 rounded-md shadow-sm">
+      <div className="grid   gap-y-4 py-4 rounded-md shadow-sm">
         <div className="flex justify-between items-center px-4">
           <p className="text-[#0d0c17] text-[16px] font-medium">
             {appointmentDetail?.serviceName}

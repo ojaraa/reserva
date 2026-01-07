@@ -1,42 +1,75 @@
 import { useState } from "react";
 import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+// import { Label } from "../ui/label";
 import { Eye, EyeOff } from "lucide-react";
+import { Field, FieldLabel } from "../ui/field";
 
 interface InputProps {
   label?: string;
   optional?: boolean;
   type: string;
   placeholder?: string;
+  dataInvalid?: boolean;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string | undefined;
 }
 
-const FormInput = ({ label, optional, type = "text" , placeholder}: InputProps) => {
+const FormInput = ({
+  label,
+  optional,
+  type = "text",
+  placeholder,
+  dataInvalid,
+  value,
+  error,
+  onChange,
+}: InputProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
   return (
-    <div className="grid gap-y-1">
+    <Field className="grid gap-y-1.5" data-invalid={dataInvalid}>
       <div className="flex justify-between items-center">
-        <Label className="font-medium text-deep-gray leading-5" htmlFor={label}>
+        <FieldLabel
+          className="font-medium text-deep-gray leading-5"
+          htmlFor={label}
+        >
           {label}
-        </Label>
-        {optional && <Label className="text-sm font-medium text-placeholder">optional</Label>}
+        </FieldLabel>
+        {optional && (
+          <span className="text-sm font-medium text-placeholder">optional</span>
+        )}
       </div>
 
       <div className="w-full relative">
-        <Input type={type === "password" && showPassword ? "text" : type} className="bg-white h-9 border-[#E4E4E7] border" placeholder={placeholder} />
+        <Input
+          value={value}
+          onChange={onChange}
+          type={type === "password" && showPassword ? "text" : type}
+          className="bg-white h-9 border-[#E4E4E7] border"
+          placeholder={placeholder}
+        />
+          {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+        {/* {dataInvalid && <FieldError errors={[fieldState.error]} />} */}
         {type === "password" && (
           <button
             className="bg-transparent! p-0! absolute right-2 top-1/2 -translate-y-1/2 outline-none"
             type="button"
             onClick={handleTogglePassword}
           >
-            {showPassword ? <Eye className="text-[#667185] size-4 cursor-pointer"/> : <EyeOff className="text-[#667185] size-4 cursor-pointer"/>}
+            {showPassword ? (
+              <Eye className="text-[#667185] size-4 cursor-pointer" />
+            ) : (
+              <EyeOff className="text-[#667185] size-4 cursor-pointer" />
+            )}
           </button>
         )}
       </div>
-    </div>
+
+    
+    </Field>
   );
 };
 

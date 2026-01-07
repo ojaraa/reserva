@@ -19,7 +19,7 @@ const Navbar = ({ showNavLink }: { showNavLink: boolean }) => {
               <li className="">Contact</li>
             </ul>
           </nav>
-          <Link to="signup">
+          <Link to="login">
             <Button>Login</Button>
           </Link>
         </div>

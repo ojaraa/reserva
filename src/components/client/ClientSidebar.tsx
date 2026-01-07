@@ -14,10 +14,10 @@ import {
   LayoutDashboardIcon,
   LogOut,
   Star,
-  User,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "../ui/button";
+import { MdBusiness } from "react-icons/md";
 
 const ClientSidebar = () => {
       const location = useLocation();
@@ -84,6 +84,11 @@ const clientSidebarItems = [
     url: "/client/dashboard",
     icon: LayoutDashboardIcon,
   },
+    {
+    label: "Vendors",
+    url: "/client/vendors",
+    icon: MdBusiness,
+  },
   {
     label: "My Appointments",
     url: "/client/appointments",
@@ -94,11 +99,7 @@ const clientSidebarItems = [
     url: "/client/calendar",
     icon: CalendarIcon,
   },
-  {
-    label: "Vendors",
-    url: "/client/vendors",
-    icon: User,
-  },
+
   {
     label: "Favourites",
     url: "/client/favorites",

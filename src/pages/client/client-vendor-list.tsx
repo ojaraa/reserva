@@ -52,7 +52,7 @@ const ClientVendorList = () => {
                 View Profile
               </Button>
 
-              <Button size="sm" className="text-xs " >
+              <Button size="sm" className="text-xs " onClick={() => navigate(`/client/vendors/${vendor.id}/book-appointment`)}>
                 Book Now
               </Button>
             </div>

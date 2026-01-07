@@ -32,9 +32,7 @@ const VendorDetailsPage = () => {
           </div>
         </div>
 
-        <div className="">
-          <Button>Book Now</Button>
-        </div>
+      
       </div>
 
       <div className="grid grid-cols-[1.5fr_2.5fr] gap-6  ">
@@ -98,7 +96,7 @@ const VendorDetailsPage = () => {
 
                         </div>
 
-                        <Button>Book</Button>
+                        <Button >Book</Button>
 
                     </div>
                 ))}
