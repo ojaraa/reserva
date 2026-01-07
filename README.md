@@ -1,74 +1,58 @@
-# React + TypeScript + Vite
+# Reserva — Appointment Booking Platform 🗓️
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Reserva is a **service-based appointment booking and scheduling web application** designed to help **clients book services** and **vendors manage their time** using a structured, calendar-driven workflow.
 
-Currently, two official plugins are available:
+The app focuses on **real-world booking flows**, clean UX decisions, and scalable frontend architecture — similar to systems used by salons, consultants, clinics, and freelancers.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🔗 **Live Demo:** https://reserva-kappa.vercel.app/  
+📦 **Repository:** https://github.com/ojaraa/reserva
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🧩 Problem Statement
 
-## Expanding the ESLint configuration
+Many small service-based businesses struggle with:
+- Manual booking via WhatsApp or phone calls
+- Missed appointments and scheduling conflicts
+- Poor visibility of upcoming bookings
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Reserva** aims to solve this by providing:
+- A structured booking flow for clients
+- Clear service and availability management for vendors
+- A dashboard-style experience that can scale into a full SaaS product
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## ✨ Core Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Client Features
+- Browse available service providers (vendors)
+- View vendor profiles and offered services
+- Book appointments based on selected services
+- View upcoming appointments in a client dashboard and calendar
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Vendor Features
+- List services offered with relevant details
+- View incoming and upcoming bookings
+- Manage bookings on calendar
+- Manage availability (conceptual flow implemented)
+- Access a vendor-specific dashboard
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### General
+- Role-based UI separation (Client vs Vendor)
+- Responsive, mobile-friendly layout
+- Clean navigation and booking flow
+- Deployed production build on Vercel
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-# reserva
+---
+
+## 🛠️ Tech Stack
+
+- **Framework:** React, TypeScript, Firebase Auth. 
+- **Styling:** Tailwind CSS + ShadCN UI
+- **Routing:** App-based routing for dashboard-style navigation
+- **Deployment:** Vercel
+
+> The project is intentionally frontend-focused, emphasizing **data flow, UI state, and real product structure** over mock-only UI screens.
+
+
