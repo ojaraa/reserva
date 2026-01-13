@@ -3,18 +3,16 @@ import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-     const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
-   <div className=" grid gap-y-16">
-      <Link to={"/"} className="pt-5 px-6 flex gap-x-1 items-center">
-        <h2 className="text-2xl font-medium">reserva</h2>
-      </Link>
-
-
-      <div className="h-[90vh] grid grid-cols-2">
-        <div className="space-y-6 px-30">
-          <h1 className="font-medium text-2xl">Log into your account</h1>
-          <div className="grid gap-y-6 ">            
+    <div className="grid grid-cols-1 sm:grid-cols-2 min-h-screen">
+      <div className=" flex  flex-col gap-y-9  ">
+        <Link to={"/"} className="pt-4 px-6 flex gap-x-1 items-center">
+          <h2 className="text-2xl font-medium">reserva</h2>
+        </Link>
+        <div className="space-y-6 px-6 sm:px-30">
+          <h1 className="font-semibold text-2xl">Log into your account</h1>
+          <div className="grid gap-y-6 ">
             <FormInput
               type="email"
               label="Email Address"
@@ -25,9 +23,13 @@ const LoginPage = () => {
               label="Password"
               placeholder="••••••••"
             />
-        
-            <Button className="py-5 mt-2" onClick={() => navigate("/onboarding")}>Login</Button>
-                
+
+            <Button
+              className="py-5 mt-2"
+              onClick={() => navigate("/onboarding")}
+            >
+              Login
+            </Button>
           </div>
 
           <div className="flex items-center gap-x-3 w-[70%] mx-auto">
@@ -58,18 +60,16 @@ const LoginPage = () => {
             </p>
           </div>
         </div>
-
-        <div className="h-full  rounded-2xl">
-          <img
-            src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bmFpbCUyMHRlY2huaWNpYW58ZW58MHx8MHx8fDA%3D"
-            className="h-fit object-cover rounded-2xl"
-          />
-        </div>
       </div>
 
-
+      <div className="hidden sm:block h-full ">
+        <img
+          src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bmFpbCUyMHRlY2huaWNpYW58ZW58MHx8MHx8fDA%3D"
+          className="w-full h-full object-cover "
+        />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

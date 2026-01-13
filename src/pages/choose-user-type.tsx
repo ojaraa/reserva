@@ -31,7 +31,7 @@ const ChooseUserType = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-y-16 w-[45vw] mx-auto">
+    <div className="flex flex-col items-center justify-center gap-y-16  w-full px-6 sm:w-[45vw] mx-auto">
       <p className="mb-6">Step 1</p>
       <h1 className="text-2xl font-medium text-center">
         How will you use Reserva?
@@ -42,7 +42,7 @@ const ChooseUserType = () => {
           control={methods.control}
           render={({ field }) => (
             <RadioGroupPrimitive.Root
-              className="grid grid-cols-2 gap-x-8 "
+              className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 gap-x-4 sm:gap-x-8 "
               value={field.value}
               onValueChange={field.onChange}
             >
@@ -63,7 +63,7 @@ const ChooseUserType = () => {
       </div>
 
       <Button
-        className="w-[400px]"
+        className=" w-full sm:w-[30vw]"
         disabled={!selectedUserType}
         onClick={handleSelectedUserType}
       >

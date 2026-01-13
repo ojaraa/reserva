@@ -108,7 +108,7 @@ localStorage.setItem("onboardingCompleted", "true");
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(submitForm)}
-          className="flex flex-col w-[45vw] mx-auto "
+          className="flex flex-col w-full px-6  sm:w-[45vw] mx-auto "
         >
           {currentStep === 0 && <VendorStepOne />}
 

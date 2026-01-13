@@ -17,7 +17,7 @@ const WelcomePage = () => {
     );
   };
   return (
-    <div className="pt-16 w-[45vw] mx-auto">
+    <div className="pt-16 w-full px-6 sm:w-[45vw] mx-auto">
       <div className="text-center space-y-4">
         <div className="flex justify-center">
           <div className="rounded-full bg-green-100 p-3">

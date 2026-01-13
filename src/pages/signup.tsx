@@ -10,7 +10,6 @@ import { toast } from "sonner";
 import { auth } from "@/services/firebase.config";
 
 const SignUp = () => {
-
   const navigate = useNavigate();
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
@@ -24,7 +23,10 @@ const SignUp = () => {
     mode: "onChange",
   });
 
-  const { control, formState:{ errors, isSubmitting } } = form;
+  const {
+    control,
+    formState: { errors, isSubmitting },
+  } = form;
 
   const handleSignUpWithEmail = async () => {
     const { email, password } = form.getValues();
@@ -47,22 +49,22 @@ const SignUp = () => {
   };
 
   return (
-    <div className=" grid gap-y-4">
-      <Link to={"/"} className="pt-5 px-6 flex gap-x-1 items-center">
-        <h2 className="text-2xl font-medium">reserva</h2>
-      </Link>
-      <div className="h-[90vh] grid grid-cols-2">
+    <div className=" grid  sm:grid-cols-2  sm:h-screen ">
+      <div className="flex flex-col gap-y-8 sm:gap-y-9   ">
+        <Link to={"/"} className=" px-6 pt-4 flex gap-x-1 items-center">
+          <h2 className="text-2xl font-medium">reserva</h2>
+        </Link>
         <form
           onSubmit={form.handleSubmit(handleSignUpWithEmail)}
-          className="grid gap-y-4 px-30"
+          className="grid gap-y-4 px-6 sm:px-30"
         >
-          <h1 className="font-medium text-2xl">Create your account</h1>
-          <div className="  grid gap-y-3 ">
-            <div className="grid  grid-cols-2 gap-x-3">
+          <h1 className="font-semibold text-2xl">Create your account</h1>
+          <div className="  grid gap-y-4 sm:gap-y-4 ">
+            <div className="grid grid-cols-1 gap-y-4 sm:grid-cols-2 gap-x-3">
               <Controller
                 name="firstName"
                 control={control}
-                render={({ field,  fieldState  }) => (
+                render={({ field, fieldState }) => (
                   <FormInput
                     type="text"
                     label="First Name"
@@ -130,11 +132,7 @@ const SignUp = () => {
               )}
             />
 
-            <Button
-              className="py-5 mt-2"
-              type="submit"
-                disabled={isSubmitting}
-            >
+            <Button className="py-5 mt-2" type="submit" disabled={isSubmitting}>
               {isSubmitting ? "Signing Up..." : "Sign Up"}
             </Button>
           </div>
@@ -168,13 +166,13 @@ const SignUp = () => {
             </p>
           </div>
         </form>
+      </div>
 
-        <div className="h-full  rounded-2xl">
-          <img
-            src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bmFpbCUyMHRlY2huaWNpYW58ZW58MHx8MHx8fDA%3D"
-            className="w-full h-full object-cover rounded-2xl"
-          />
-        </div>
+      <div className="hidden sm:block h-full   ">
+        <img
+          src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bmFpbCUyMHRlY2huaWNpYW58ZW58MHx8MHx8fDA%3D"
+          className="w-full h-full object-cover"
+        />
       </div>
     </div>
   );

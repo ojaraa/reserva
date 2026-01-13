@@ -30,7 +30,7 @@ const ClientOnboarding = () => {
 
       <form
         onSubmit={methods.handleSubmit(submitForm)}
-        className="flex flex-col gap-y-8 w-[45vw] mx-auto pt-10"
+        className="flex flex-col gap-y-8 w-full px-6 sm:w-[45vw] mx-auto pt-10"
       >
         <div className="grid gap-y-2">
           <h1 className="text-2xl font-medium">Set up your experience</h1>
@@ -62,7 +62,7 @@ const ClientOnboarding = () => {
         </div>
 
         <Button
-          className="w-[45vw]"
+          className="w-full sm:w-[45vw]"
           onClick={() => navigate("/onboarding/success")}
         >
           Complete setup
