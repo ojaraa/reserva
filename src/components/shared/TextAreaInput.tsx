@@ -1,28 +1,44 @@
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "../ui/label";
+import { Field, FieldLabel } from "../ui/field";
 
 interface TextAreaProps {
   placeholder?: string;
   label?: string;
-    optional?: boolean;
+  value?: string;
+  optional?: boolean;
+  error?: string;
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onBlur?: () => void;
 }
 
-const TextAreaInput = ({ placeholder, label , optional}: TextAreaProps) => {
+const TextAreaInput = ({
+  placeholder,
+  label,
+  optional,
+  error,
+  value,
+  onChange,
+  onBlur,
+}: TextAreaProps) => {
   return (
-    <div className="grid gap-y-1">
+    <Field className="grid gap-y-1">
       <div className="flex justify-between items-center">
-        <Label className="font-medium text-deep-gray leading-5" htmlFor={label}>
+        <FieldLabel
+          className="font-medium text-deep-gray leading-5"
+          htmlFor={label}
+        >
           {label}
-        </Label>
+        </FieldLabel>
         {optional && (
-          <Label className="text-sm font-medium text-placeholder">
-            optional
-          </Label>
+          <span className="text-sm font-medium text-placeholder">optional</span>
         )}
       </div>
 
-      <Textarea placeholder={placeholder} />
-    </div>
+      <Textarea placeholder={placeholder}  value={value}          
+        onChange={onChange}    
+        onBlur={onBlur}  />
+      {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+    </Field>
   );
 };
 

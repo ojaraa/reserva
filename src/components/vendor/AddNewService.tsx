@@ -39,7 +39,7 @@ const AddNewService = () => {
             <FormInput type="text" label="Price" placeholder="In Naira" />
           </div>
 
-          <TextAreaInput label="Service Description" optional placeholder="Describe the service you are renderin in detail" />
+          <TextAreaInput label="Service Description" optional placeholder="Describe the service you are renderin in detail"  />
 
            <DialogFooter>
             <DialogClose>

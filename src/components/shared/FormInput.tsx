@@ -3,6 +3,7 @@ import { Input } from "../ui/input";
 // import { Label } from "../ui/label";
 import { Eye, EyeOff } from "lucide-react";
 import { Field, FieldLabel } from "../ui/field";
+// import type { FieldError } from "react-hook-form";
 
 interface InputProps {
   label?: string;
@@ -12,7 +13,7 @@ interface InputProps {
   dataInvalid?: boolean;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  error?: string | undefined;
+ error?: string;
 }
 
 const FormInput = ({
@@ -52,7 +53,7 @@ const FormInput = ({
           placeholder={placeholder}
         />
           {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
-        {/* {dataInvalid && <FieldError errors={[fieldState.error]} />} */}
+       
         {type === "password" && (
           <button
             className="bg-transparent! p-0! absolute right-2 top-1/2 -translate-y-1/2 outline-none"

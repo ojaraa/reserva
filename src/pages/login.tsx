@@ -13,7 +13,7 @@ const LoginPage = () => {
 
       <div className="h-[90vh] grid grid-cols-2">
         <div className="space-y-6 px-30">
-          <h1 className="font-medium text-2xl">Create your account</h1>
+          <h1 className="font-medium text-2xl">Log into your account</h1>
           <div className="grid gap-y-6 ">            
             <FormInput
               type="email"

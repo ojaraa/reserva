@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router-dom";
-import { Button } from "../ui/button";
 import { serviceCategories } from "@/models/data";
+import { useFormContext } from "react-hook-form";
 
-const ClientStepTwo = ({ prevStep }: { prevStep: () => void }) => {
-  const navigate = useNavigate();
+const ClientStepTwo = () => {
+  const { register , formState: { errors }} = useFormContext();
+    console.log(errors);
   return (
     <div className="grid gap-y-6 w-[40vw] ">
       <div className="grid gap-y-2">
@@ -19,10 +19,11 @@ const ClientStepTwo = ({ prevStep }: { prevStep: () => void }) => {
           <label key={service.id} className="inline-block">
             <input
               type="checkbox"
-              name="services"
               value={service.name}
+              {...register("prefferedServices")}
               className="hidden peer"
             />
+
             <span
               className="px-4 py-1.5 rounded-[6px] text-sm font-medium cursor-pointer transition-colors inline-block
               peer-checked:bg-primary-blue peer-checked:text-white peer-checked:hover:bg-primary-blue
@@ -32,16 +33,6 @@ const ClientStepTwo = ({ prevStep }: { prevStep: () => void }) => {
             </span>
           </label>
         ))}
-      </div>
-
-      <div className="flex justify-between mt-4">
-        <Button variant="ghost" onClick={prevStep}>
-          Skip for now
-        </Button>
-
-        <Button onClick={() => navigate("/client/dashboard")}>
-          Finish Setup
-        </Button>
       </div>
     </div>
   );

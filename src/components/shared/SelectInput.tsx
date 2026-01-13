@@ -18,10 +18,11 @@ interface SelectInputProps {
   placeholder?: string;
   options?: Option[];
   value?: string;
+  error?: string;
   onChange?: (value: string) => void;
 }
 
-const SelectInput = ({ label, optional, placeholder, options, value , onChange}: SelectInputProps) => {
+const SelectInput = ({ label, optional, placeholder, options, error, value , onChange}: SelectInputProps) => {
   return (
     <div className="grid gap-y-1">
       <div className="flex justify-between items-center">
@@ -51,6 +52,8 @@ const SelectInput = ({ label, optional, placeholder, options, value , onChange}:
           )}
         </SelectContent>
       </Select>
+
+         {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
     </div>
   );
 };

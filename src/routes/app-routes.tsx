@@ -1,15 +1,17 @@
 import ClientDashboardLayout from "@/components/ClientDashboardLayout";
+import WelcomePage from "@/components/onboarding-steps/welcome-page";
 import VendorDashboardLayout from "@/components/VendorDashboardLayout";
+import ChooseUserType from "@/pages/choose-user-type";
 import BookAppointment from "@/pages/client/book-appointment";
 import CllientAppointments from "@/pages/client/client-appointments";
 import ClientCalendar from "@/pages/client/client-calendar";
 import ClientDashboard from "@/pages/client/client-dashboard";
+import ClientOnboarding from "@/pages/client/client-onboarding";
 import ClientVendorList from "@/pages/client/client-vendor-list";
 import VendorDetailsPage from "@/pages/client/vendor-details-page";
 import VendorServiceDetail from "@/pages/client/vendor-service-detail";
 import LandingPage from "@/pages/landing-page";
 import LoginPage from "@/pages/login";
-import Onboarding from "@/pages/onboarding";
 import SignUp from "@/pages/signup";
 import BookingDetails from "@/pages/vendor/booking-details";
 import Bookings from "@/pages/vendor/bookings";
@@ -17,6 +19,7 @@ import ServiceDetails from "@/pages/vendor/service-details";
 import VendorServices from "@/pages/vendor/services";
 import VendorCalendar from "@/pages/vendor/vendor-calendar";
 import VendorDashboard from "@/pages/vendor/vendor-dashboard";
+import VendorOnboarding from "@/pages/vendor/vendor-onboarding";
 import { createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -31,7 +34,24 @@ const router = createBrowserRouter([
 
   {
     path: "/onboarding",
-    element: <Onboarding />,
+    children : [
+      {
+          path: "",
+          element: <ChooseUserType />,
+      },
+      {
+        path: "vendor",
+        element: <VendorOnboarding/>
+      },
+      {
+        path: "client",
+        element: <ClientOnboarding/>
+      },
+      {
+        path:"success",
+        element: <WelcomePage/>
+      }
+    ]
   },
   {
     path: "/login",

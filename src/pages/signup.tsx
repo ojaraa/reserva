@@ -38,7 +38,7 @@ const SignUp = () => {
         password
       );
       console.log(userData.user);
-      toast.success("Logged in successfully");
+      toast.success("Account created successfully");
       navigate("/onboarding");
     } catch (error) {
       console.log(error);

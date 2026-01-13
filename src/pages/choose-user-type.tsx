@@ -1,24 +1,45 @@
 import { BriefcaseBusiness, UserRound } from "lucide-react";
-import { Button } from "../ui/button";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
-import { Controller, useFormContext } from "react-hook-form";
-// import type { UserType } from "@/models/interface";
+import { Controller, useForm, useWatch } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import { userTypeSchema, type UserType } from "@/models/schema";
 
-const StepOne = ({nextStep} : {nextStep: () => void;}) => {
-  const { control, watch, getValues } = useFormContext();
-  
-  console.log(watch("userType"));
-  console.log(getValues());
+const ChooseUserType = () => {
+  const methods = useForm<UserType>({
+    resolver: zodResolver(userTypeSchema),
+    defaultValues: {
+      userType: undefined,
+    },
+    mode: "onChange",
+  });
+
+  const selectedUserType = useWatch({
+    control: methods.control,
+    name: "userType",
+  });
+
+  const navigate = useNavigate();
+
+  const handleSelectedUserType = () => {
+    if (selectedUserType === "vendor") {
+      navigate("/onboarding/vendor");
+    } else {
+      navigate("/onboarding/client");
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center gap-y-16 ">
-        <p className="mb-6">Step 1</p>
+    <div className="flex flex-col items-center justify-center gap-y-16 w-[45vw] mx-auto">
+      <p className="mb-6">Step 1</p>
       <h1 className="text-2xl font-medium text-center">
         How will you use Reserva?
       </h1>
       <div>
         <Controller
           name="userType"
-          control={control}
+          control={methods.control}
           render={({ field }) => (
             <RadioGroupPrimitive.Root
               className="grid grid-cols-2 gap-x-8 "
@@ -29,8 +50,7 @@ const StepOne = ({nextStep} : {nextStep: () => void;}) => {
                 <RadioGroupPrimitive.Item
                   value={type.value}
                   key={type.id}
-                  className="grid gap-y-2 text-start py-4 pt-6 px-5 cursor-pointer border border-placeholder data-[state=checked]:border-primary-blue)] data-[state=checked]:bg-[hsl(218,100%,97%)] hover:border-primary-blue rounded-md "
-                  
+                  className="grid gap-y-2 text-start py-4 pt-6 px-5 cursor-pointer border border-placeholder data-[state=checked]:border-primary-blue)] data-[state=checked]:bg-[hsl(218,100%,97%)] hover:border-primary-blue rounded-md hover:bg-[hsl(218,100%,97%)] "
                 >
                   <div className="text-primary-blue">{type.icon}</div>
                   <p className="font-medium text-sm">{type.title}</p>
@@ -41,13 +61,19 @@ const StepOne = ({nextStep} : {nextStep: () => void;}) => {
           )}
         />
       </div>
-   
-      <Button className="w-[30vw] mt-18" onClick={nextStep} >Continue</Button>
+
+      <Button
+        className="w-[400px]"
+        disabled={!selectedUserType}
+        onClick={handleSelectedUserType}
+      >
+        Continue
+      </Button>
     </div>
   );
 };
 
-export default StepOne;
+export default ChooseUserType;
 
 const userType = [
   {
