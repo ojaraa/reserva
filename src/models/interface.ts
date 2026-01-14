@@ -1,3 +1,7 @@
+import type { User } from "firebase/auth";
+
+export type UserType = "client" | "vendor";
+export type OnboardingStatus = "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED";
 export interface AppointmentData {
   id: string;
   clientFirstName: string;
@@ -18,7 +22,19 @@ export interface AppointmentData {
   updatedAt?: string;
 };
 
-export type UserType = "client" | "vendor";
+export interface UserData {
+  name: string;
+  email: string;
+  uid: string;
+  role: UserType | null;
+  createdAt: string;
+  onboardingStatus: OnboardingStatus;
+}
 
 
+export interface AuthContextType {
+  user: User | null;
+  loading :boolean;
+  userData: UserData | null;
+}
 

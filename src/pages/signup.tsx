@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import FormInput from "@/components/shared/FormInput";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,7 +7,8 @@ import type z from "zod";
 import { signUpSchema } from "@/models/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { auth } from "@/services/firebase.config";
+import { auth, db, googleProvider } from "@/services/firebase.config";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -29,19 +30,48 @@ const SignUp = () => {
   } = form;
 
   const handleSignUpWithEmail = async () => {
-    const { email, password } = form.getValues();
+    const { email, password, firstName, lastName } = form.getValues();
     console.log(form.getValues());
-    // const isValid = await form.trigger();
-    // if (!isValid) return;
+    const isValid = await form.trigger();
+    if (!isValid) return;
     try {
       const userData = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
-      console.log(userData.user);
+      const uid = userData.user.uid;
+      const userRef = doc(db, "users", uid);
+      await setDoc(userRef, {
+        name: firstName + " " + lastName,
+        email,
+        uid,
+        role: null,
+        createdAt: serverTimestamp(),
+        onboardingStatus: "NOT_STARTED",
+      });
+
       toast.success("Account created successfully");
-      navigate("/onboarding");
+      navigate("/choose-your-user-type");
+    } catch (error) {
+      console.log(error);
+      toast.error((error as { message: string }).message);
+    }
+  };
+
+  const handleSignUpWithGoogle = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      console.log("google user", result.user);
+      const uid = result.user.uid;
+      const userRef = doc(db, "users", uid);
+      await setDoc(userRef, {
+        name: result.user.displayName,
+        email: result.user.email,
+        uid,
+        role: null,
+        createdAt: serverTimestamp(),
+      });
     } catch (error) {
       console.log(error);
       toast.error((error as { message: string }).message);
@@ -145,7 +175,8 @@ const SignUp = () => {
 
           <Button
             className="w-full bg-white border hover:bg-gray-100 text-black"
-            // onClick={() => navigate("/onboarding")}
+            type="button"
+            onClick={handleSignUpWithGoogle}
             disabled={isSubmitting}
           >
             <img

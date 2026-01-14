@@ -9,6 +9,9 @@ import VendorStepThree from "@/components/onboarding-steps/VendorStepThree";
 import ReviewVendorOnboardingDetails from "@/components/onboarding-steps/ReviewVendorOnboardingDetails";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { db } from "@/services/firebase.config";
+import { useAuth } from "@/hooks/useAuth";
 
 const VendorOnboarding = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -65,22 +68,32 @@ const VendorOnboarding = () => {
     ["availability"],
   ];
 
-  type FieldName = keyof FormData;
-  const submitForm: SubmitHandler<FormData> = (data) => {
-    console.log("data submitted succesfully", data);
-    methods.reset();
-    navigate("/onboarding/success");
-    localStorage.setItem("userType", "vendor");
-localStorage.setItem("onboardingCompleted", "true");
+  const { user } = useAuth();
 
+  type FieldName = keyof FormData;
+  const submitForm: SubmitHandler<FormData> = async (data) => {
+    try {
+      if (user?.uid) {
+        const vendorsRef = doc(db, "vendors", user?.uid);
+        await setDoc(vendorsRef, data);
+
+        console.log("data submitted succesfully", data);
+        await updateDoc(doc(db, "users", user?.uid), {
+          onboardingStatus: "COMPLETED",
+        });
+        methods.reset();
+        navigate("/onboarding/success");
+        // localStorage.setItem("userType", "vendor");
+        // localStorage.setItem("onboardingCompleted", "true");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const isReviewStep = currentStep === stepFields.length;
 
-  const {
-    // formState: { errors },
-    getValues,
-  } = methods;
+  const { getValues } = methods;
 
   const nextStep = async () => {
     if (currentStep === 3) {

@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
 import { serviceCategories } from "@/models/data";
 import { clientOnboardingSchema, type ClientData } from "@/models/schema";
+import { db } from "@/services/firebase.config";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -16,11 +19,23 @@ const ClientOnboarding = () => {
 
   const { register } = methods;
   const navigate = useNavigate();
+  const { user } = useAuth();
 
-  const submitForm: SubmitHandler<ClientData> = (data) => {
-    console.log(data);
-    localStorage.setItem("userType", "client");
-    localStorage.setItem("onboardingCompleted", "true");
+  const submitForm: SubmitHandler<ClientData> = async (data) => {
+    try {
+      if (user?.uid) {
+        const vendorsRef = doc(db, "clients", user?.uid);
+        await setDoc(vendorsRef, data);
+
+        console.log("data submitted succesfully", data);
+        await updateDoc(doc(db, "users", user?.uid), {
+          onboardingStatus: "COMPLETED",
+        });
+
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className=" gap-y-8 h-screen flex flex-col">

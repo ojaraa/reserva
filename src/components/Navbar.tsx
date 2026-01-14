@@ -2,8 +2,13 @@
 
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import { ArrowRight } from "lucide-react";
 
 const Navbar = ({ showNavLink }: { showNavLink: boolean }) => {
+  const { user, userData } = useAuth();
+  const isUserSignedIn = user && userData?.role;
+
   return (
     <div className="flex items-center justify-between p-6">
       <Link to={"/"} className="flex gap-x-1 items-center">
@@ -19,9 +24,19 @@ const Navbar = ({ showNavLink }: { showNavLink: boolean }) => {
               <li className="">Contact</li>
             </ul>
           </nav>
-          <Link to="login">
-            <Button>Login</Button>
-          </Link>
+          {isUserSignedIn ? (
+            <Link to={`/${userData?.role}/dashboard`}>
+            <Button >
+              <ArrowRight />
+              Go to Dashboard
+            </Button>
+            </Link>
+            
+          ) : (
+            <Link to="login">
+              <Button>Login</Button>
+            </Link>
+          )}
         </div>
       )}
     </div>

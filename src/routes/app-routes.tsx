@@ -21,6 +21,7 @@ import VendorCalendar from "@/pages/vendor/vendor-calendar";
 import VendorDashboard from "@/pages/vendor/vendor-dashboard";
 import VendorOnboarding from "@/pages/vendor/vendor-onboarding";
 import { createBrowserRouter } from "react-router-dom";
+import ProtectedRoutes from "./protected-routes";
 
 const router = createBrowserRouter([
   {
@@ -31,120 +32,124 @@ const router = createBrowserRouter([
     path: "/signup",
     element: <SignUp />,
   },
-
-  {
-    path: "/onboarding",
-    children : [
-      {
-          path: "",
-          element: <ChooseUserType />,
-      },
-      {
-        path: "vendor",
-        element: <VendorOnboarding/>
-      },
-      {
-        path: "client",
-        element: <ClientOnboarding/>
-      },
-      {
-        path:"success",
-        element: <WelcomePage/>
-      }
-    ]
-  },
   {
     path: "/login",
     element: <LoginPage />,
   },
   {
-    path: "vendor",
-    element: <VendorDashboardLayout />,
+    path: "",
+    element: <ProtectedRoutes />,
     children: [
+       {
+            path: "/choose-your-user-type",
+            element: <ChooseUserType />,
+          },
       {
-        path: "dashboard",
-        element: <VendorDashboard />,
-      },
-      {
-        path: "bookings",
+        path: "/onboarding",
         children: [
+         
           {
-            path: "",
-            element: <Bookings />,
+            path: "vendor",
+            element: <VendorOnboarding />,
           },
           {
-            path: ":id",
-            element: <BookingDetails />,
+            path: "client",
+            element: <ClientOnboarding />,
+          },
+          {
+            path: "success",
+            element: <WelcomePage />,
           },
         ],
       },
+
       {
-        path: "services",
+        path: "vendor",
+        element: <VendorDashboardLayout />,
         children: [
-            {
+          {
+            path: "dashboard",
+            element: <VendorDashboard />,
+          },
+          {
+            path: "bookings",
+            children: [
+              {
                 path: "",
-                element: <VendorServices/>,
-            },
-            {
+                element: <Bookings />,
+              },
+              {
                 path: ":id",
-                element: <ServiceDetails/>
-            }
+                element: <BookingDetails />,
+              },
+            ],
+          },
+          {
+            path: "services",
+            children: [
+              {
+                path: "",
+                element: <VendorServices />,
+              },
+              {
+                path: ":id",
+                element: <ServiceDetails />,
+              },
+            ],
+          },
+          {
+            path: "calendar",
+            element: <VendorCalendar />,
+          },
         ],
       },
       {
-        path: "calendar",
-        element: <VendorCalendar />,
+        path: "client",
+        element: <ClientDashboardLayout />,
+        children: [
+          {
+            path: "dashboard",
+            element: <ClientDashboard />,
+          },
+          {
+            path: "appointments",
+            element: <CllientAppointments />,
+          },
+          {
+            path: "calendar",
+            element: <ClientCalendar />,
+          },
+          {
+            path: "vendors",
+            children: [
+              {
+                path: "",
+                element: <ClientVendorList />,
+              },
+              {
+                path: ":id",
+                children: [
+                  {
+                    path: "",
+                    element: <VendorDetailsPage />,
+                  },
+                  {
+                    path: "services/:serviceId",
+                    element: <VendorServiceDetail />,
+                  },
+                  {
+                    path: "book-appointment",
+                    element: <BookAppointment />,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
       },
     ],
   },
-  {
-    path: "client",
-    element: <ClientDashboardLayout/>,
-    children: [
-        {
-            path: "dashboard",
-            element: <ClientDashboard/>
-        },
-        {
-            path:"appointments",
-            element: <CllientAppointments/>
-        },
-        {
-            path:"calendar",
-            element: <ClientCalendar/>
-        },
-        {
-            path:"vendors",
-            children : [
-                {
-                    path: "",
-                    element: <ClientVendorList/>
-                },
-                {
-                    path: ":id",
-                    children:[
-                        {
-                            path: "",
-                            element: <VendorDetailsPage/>,
-                        },
-                        {
-                            path: "services/:serviceId",
-                            element: <VendorServiceDetail/>
-                        },
-                        {
-                          path:"book-appointment",
-                          element: <BookAppointment/>,
-                        }
 
-                    ],
-                    
-                }
-            ],
-           
-        }
-
-    ]
-  },
   { path: "*", element: <div>404 – Page not found</div> },
 ]);
 

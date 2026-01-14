@@ -1,11 +1,13 @@
 import { CheckCircle2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const WelcomePage = () => {
     const navigate = useNavigate();
+    const {userData} = useAuth()
 
-  const userType = localStorage.getItem("userType");
+  const userType = userData?.role
   console.log(userType);
 
 
@@ -16,6 +18,7 @@ const WelcomePage = () => {
         : "/client/dashboard"
     );
   };
+
   return (
     <div className="pt-16 w-full px-6 sm:w-[45vw] mx-auto">
       <div className="text-center space-y-4">

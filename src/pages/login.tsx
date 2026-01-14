@@ -1,33 +1,93 @@
 import FormInput from "@/components/shared/FormInput";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import { loginSchema } from "@/models/schema";
+import { auth } from "@/services/firebase.config";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { Controller, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const LoginPage = () => {
+  const form = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    mode: "onChange",
+  });
   const navigate = useNavigate();
+  const { userData } = useAuth();
+
+  const handleLoginWithEmailAndPassword = async () => {
+    const { email, password } = form.getValues();
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      console.log(user);
+      const userType = userData?.role;
+      toast.success("Login successful");
+      const nextRoute =
+        userData?.onboardingStatus === "COMPLETED"
+          ? `/${userType}/dashboard`
+          : "/choose-your-user-type";
+      navigate(nextRoute);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const {
+    control,
+    formState: { errors },
+  } = form;
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 min-h-screen">
       <div className=" flex  flex-col gap-y-9  ">
         <Link to={"/"} className="pt-4 px-6 flex gap-x-1 items-center">
           <h2 className="text-2xl font-medium">reserva</h2>
         </Link>
-        <div className="space-y-6 px-6 sm:px-30">
+        <form
+          onSubmit={form.handleSubmit(handleLoginWithEmailAndPassword)}
+          className="space-y-6 px-6 sm:px-30"
+        >
           <h1 className="font-semibold text-2xl">Log into your account</h1>
           <div className="grid gap-y-6 ">
-            <FormInput
-              type="email"
-              label="Email Address"
-              placeholder="Email Address"
-            />
-            <FormInput
-              type="password"
-              label="Password"
-              placeholder="••••••••"
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <FormInput
+                  type="email"
+                  label="Email Address"
+                  placeholder="Email Address"
+                  {...field}
+                  error={errors?.email?.message as string}
+                />
+              )}
             />
 
-            <Button
-              className="py-5 mt-2"
-              onClick={() => navigate("/onboarding")}
-            >
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <FormInput
+                  type="password"
+                  label="Password"
+                  placeholder="••••••••"
+                  {...field}
+                  error={errors?.password?.message as string}
+                />
+              )}
+            />
+
+            <Button className="py-5 mt-2" type="submit">
               Login
             </Button>
           </div>
@@ -59,7 +119,7 @@ const LoginPage = () => {
               </Link>
             </p>
           </div>
-        </div>
+        </form>
       </div>
 
       <div className="hidden sm:block h-full ">

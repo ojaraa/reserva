@@ -1,10 +1,14 @@
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import { ArrowRight } from "lucide-react";
 
 import { Link } from "react-router-dom";
 
 const LandingPage = () => {
-  
+  const { user, userData } = useAuth();
+  const isUserSignedIn = user && userData?.role;
+
   return (
     <div className="grid gap-6">
       <Navbar showNavLink={true} />
@@ -21,9 +25,14 @@ const LandingPage = () => {
           </p>
 
           <div className="flex items-center justify-center gap-4 mt-2">
-            <Link to="signup">
-              <Button>Get Started</Button>
-            </Link>
+            {!isUserSignedIn && (
+              <Link to={`/login`}>
+                <Button>
+                  <ArrowRight />
+                  Get Started
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
 

@@ -5,6 +5,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { userTypeSchema, type UserType } from "@/models/schema";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/services/firebase.config";
+import { useAuth } from "@/hooks/useAuth";
 
 const ChooseUserType = () => {
   const methods = useForm<UserType>({
@@ -21,12 +24,26 @@ const ChooseUserType = () => {
   });
 
   const navigate = useNavigate();
+  const { user } = useAuth();
 
-  const handleSelectedUserType = () => {
-    if (selectedUserType === "vendor") {
-      navigate("/onboarding/vendor");
-    } else {
-      navigate("/onboarding/client");
+  const handleSelectedUserType = async () => {
+    try {
+      const { userType } = methods.getValues();
+      const uid = user?.uid;
+      if (uid) {
+        const userRef = doc(db, "users", uid);
+        await updateDoc(userRef, {
+          role: userType,
+          
+        });
+      }
+      if (selectedUserType === "vendor") {
+        navigate("/onboarding/vendor");
+      } else {
+        navigate("/onboarding/client");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
