@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
-import { ArrowRight } from "lucide-react";
+// import { ArrowRight } from "lucide-react";
 
 import { Link } from "react-router-dom";
 
@@ -28,7 +28,7 @@ const LandingPage = () => {
             {!isUserSignedIn && (
               <Link to={`/login`}>
                 <Button>
-                  <ArrowRight />
+                  {/* <ArrowRight /> */}
                   Get Started
                 </Button>
               </Link>

@@ -162,8 +162,9 @@ const VendorServices = () => {
 
                               <DeleteConfirmation
                                 description="Are sure you want to really delete this service"
-                                title="Service"
+                                title="Delete Service"
                                 handleDelete={() => console.log("deleted")}
+                                buttonText="Delete"
                               />
                             </AlertDialog>
                           </>

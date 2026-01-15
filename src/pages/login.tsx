@@ -1,10 +1,12 @@
 import FormInput from "@/components/shared/FormInput";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/hooks/useAuth";
+// import { useAuth } from "@/hooks/useAuth";
+import type { UserData } from "@/models/interface";
 import { loginSchema } from "@/models/schema";
-import { auth } from "@/services/firebase.config";
+import { auth, db } from "@/services/firebase.config";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import { Controller, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -19,7 +21,6 @@ const LoginPage = () => {
     mode: "onChange",
   });
   const navigate = useNavigate();
-  const { userData } = useAuth();
 
   const handleLoginWithEmailAndPassword = async () => {
     const { email, password } = form.getValues();
@@ -30,22 +31,26 @@ const LoginPage = () => {
         password
       );
       const user = userCredential.user;
-      console.log(user);
+      const userDocRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+      const userData = userDoc.data() as UserData | null;
       const userType = userData?.role;
-      toast.success("Login successful");
-      const nextRoute =
-        userData?.onboardingStatus === "COMPLETED"
-          ? `/${userType}/dashboard`
-          : "/choose-your-user-type";
-      navigate(nextRoute);
+      if (userData) {
+        const nextRoute =
+          userData?.onboardingStatus === "COMPLETED"
+            ? `/${userType}/dashboard`
+            : "/choose-your-user-type";
+        navigate(nextRoute);
+      }
     } catch (error) {
       console.log(error);
+      toast.error((error as { message: string }).message);
     }
   };
 
   const {
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = form;
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 min-h-screen">
@@ -88,7 +93,7 @@ const LoginPage = () => {
             />
 
             <Button className="py-5 mt-2" type="submit">
-              Login
+              {isSubmitting ? "Logging in..." : "Login"}
             </Button>
           </div>
 

@@ -18,6 +18,10 @@ import {
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "../ui/button";
 import { MdBusiness } from "react-icons/md";
+import { AlertDialog, AlertDialogTrigger } from "../ui/alert-dialog";
+import { signOut } from "firebase/auth";
+import { auth } from "@/services/firebase.config";
+import DeleteConfirmation from "../shared/DeleteConfirmation";
 
 const ClientSidebar = () => {
       const location = useLocation();
@@ -25,6 +29,14 @@ const ClientSidebar = () => {
       const isActive = (path: string) => {
         return location.pathname === path;
       };
+
+       const handleLogout = async () => {
+          try {
+            await signOut(auth);
+          } catch (error) {
+            console.log(error);
+          }
+        };
   return (
      <Sidebar className="px-4 py-4 ">
       <SidebarHeader>
@@ -63,10 +75,21 @@ const ClientSidebar = () => {
 
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <Button variant="ghost" className="w-full justify-start">
-                  <LogOut />
-                  <span>Logout</span>
-                </Button>
+                <AlertDialog>
+                                  <AlertDialogTrigger asChild>
+                                    <Button variant="ghost" className="w-full justify-start">
+                                      <LogOut />
+                                      <span>Logout</span>
+                                    </Button>
+                                  </AlertDialogTrigger>
+                
+                                  <DeleteConfirmation
+                                    description="Are you sure you want to logout?"
+                                    title="Logout"
+                                    handleDelete={handleLogout}
+                                    buttonText="Logout"
+                                  />
+                                </AlertDialog>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>

@@ -16,7 +16,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoading(false);
+     if (!currentUser) {
+        setUserData(null);
+        setLoading(false);
+      }
     });
 
     return unsubscribe;
@@ -24,14 +27,24 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     let unsubscribeUser: () => void = () => {};
-    // if (!user) {
-    //   setUserData(null);
-    //   setLoading(false);
-    //   return;
-    // }
+    
 
     if (user) {
       const userRef = doc(db, "users", user.uid);
+
+      //  getDoc(userRef).then((snapshot) => {
+      //   if (snapshot.exists()) {
+      //     setUserData(snapshot.data() as UserData);
+      //   } else {
+      //     setUserData(null);
+      //   }
+      //   setLoading(false);
+      // }).catch((error) => {
+      //   console.error("Error fetching user data:", error);
+      //   setLoading(false);
+      // });
+
+
       unsubscribeUser = onSnapshot(userRef, (snapshot) => {
         if (snapshot.exists()) {
           setUserData(snapshot.data() as UserData);
@@ -51,3 +64,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     </AuthContext.Provider>
   );
 };
+
+
+// if (!user) {
+    //   setUserData(null);
+    //   setLoading(false);
+    //   return;
+    // }

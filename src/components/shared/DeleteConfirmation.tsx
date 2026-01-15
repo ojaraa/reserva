@@ -13,21 +13,21 @@ interface DeleteConfirmationProps {
     handleDelete: () => void;
     title: string;
     description: string;
-
+    buttonText: string;
 }
 
-const DeleteConfirmation = ({handleDelete, title, description} : DeleteConfirmationProps) => {
+const DeleteConfirmation = ({handleDelete, title, description, buttonText} : DeleteConfirmationProps) => {
   return (
      <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete {title}</AlertDialogTitle>
+          <AlertDialogTitle> {title}</AlertDialogTitle>
           <AlertDialogDescription>
             {description}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <Button onClick={handleDelete} variant="destructive">Delete</Button>
+          <Button onClick={handleDelete} variant="destructive">{buttonText}</Button>
         </AlertDialogFooter>
       </AlertDialogContent>
   )

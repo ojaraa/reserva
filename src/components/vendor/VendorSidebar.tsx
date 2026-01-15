@@ -17,12 +17,24 @@ import {
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "../ui/button";
+import { signOut } from "firebase/auth";
+import { auth } from "@/services/firebase.config";
+import { AlertDialog, AlertDialogTrigger } from "../ui/alert-dialog";
+import DeleteConfirmation from "../shared/DeleteConfirmation";
 
 const VendorSidebar = () => {
   const location = useLocation();
 
   const isActive = (path: string) => {
     return location.pathname === path;
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -37,7 +49,13 @@ const VendorSidebar = () => {
         <SidebarMenu className="mt-6">
           {vendorSidebarItems.map((item) => (
             <SidebarMenuItem className="pb-2 " key={item.label}>
-              <SidebarMenuButton asChild className={`${isActive(item.url) && "bg-[#e9e9f7] text-sidebar-accent-foreground"}`}>
+              <SidebarMenuButton
+                asChild
+                className={`${
+                  isActive(item.url) &&
+                  "bg-[#e9e9f7] text-sidebar-accent-foreground"
+                }`}
+              >
                 <Link to={item.url}>
                   <item.icon />
                   <span>{item.label}</span>
@@ -63,10 +81,21 @@ const VendorSidebar = () => {
 
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <Button variant="ghost" className="w-full justify-start">
-                  <LogOut />
-                  <span>Logout</span>
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="ghost" className="w-full justify-start">
+                      <LogOut />
+                      <span>Logout</span>
+                    </Button>
+                  </AlertDialogTrigger>
+
+                  <DeleteConfirmation
+                    description="Are you sure you want to logout?"
+                    title="Logout"
+                    handleDelete={handleLogout}
+                    buttonText="Logout"
+                  />
+                </AlertDialog>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>

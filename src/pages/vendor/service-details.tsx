@@ -53,6 +53,7 @@ const ServiceDetails = () => {
               <DeleteConfirmation
                 description="Are sure you want to really delete this service"
                 title="Service"
+                buttonText="Delete"
                 handleDelete={() => console.log("deleted")}
               />
             </AlertDialog>
