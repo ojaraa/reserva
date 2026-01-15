@@ -22,11 +22,16 @@ import VendorDashboard from "@/pages/vendor/vendor-dashboard";
 import VendorOnboarding from "@/pages/vendor/vendor-onboarding";
 import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoutes from "./protected-routes";
+// import ReservaVendorDashboard from "@/pages/text";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <LandingPage />,
   },
+  // {
+  //   path: "test",
+  //   element: <ReservaVendorDashboard/>
+  // },
   {
     path: "/signup",
     element: <SignUp />,

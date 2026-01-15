@@ -1,24 +1,19 @@
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
-// import {  BarChart3, CheckCircle2, Users, Zap } from "lucide-react";
+
 import {
-  // Calendar,
   Clock,
-  // Shield,
   Zap,
   CheckCircle2,
   Users,
   Bell,
   ArrowRight,
   Star,
-  // Menu,
-  // X,
   Smartphone,
-  BarChart3,
   Calendar,
 } from "lucide-react";
-// import { ArrowRight } from "lucide-react";
+
 
 import { Link } from "react-router-dom";
 
@@ -68,11 +63,11 @@ const LandingPage = () => {
         <div className="mt-16 relative">
           <div className="absolute inset-0 bg-linear-to-t from-white via-transparent to-transparent z-10 h-full w-full"></div>
           <div className="bg-slate-50 rounded-2xl border border-slate-200 p-4 shadow-2xl max-w-5xl mx-auto overflow-hidden">
-            <div className="bg-white rounded-lg border border-slate-200 h-[400px] flex items-center justify-center">
-              <div className="flex flex-col items-center opacity-40">
-                <BarChart3 size={48} className="mb-4" />
-                <p className="font-medium">Dashboard Preview</p>
-              </div>
+            <div className="bg-white rounded-lg border border-slate-200 md:h-[450px] flex items-center justify-center">
+              <img
+                src="/assets/images/dashboardPreview.jpg"
+                className="w-full h-full object-contain md:object-cover "
+              />
             </div>
           </div>
         </div>
@@ -90,9 +85,9 @@ const LandingPage = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-12 ">
             {/* For Vendors */}
-            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+            <div className=" bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
               <span className="text-sm font-bold uppercase tracking-widest text-indigo-500 mb-4 block">
                 For Providers
               </span>
@@ -117,7 +112,7 @@ const LandingPage = () => {
             </div>
 
             {/* For Clients */}
-            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+            <div className="bg-white  p-8 rounded-3xl border border-slate-100 shadow-sm">
               <span className="text-sm font-bold uppercase tracking-widest text-indigo-500 mb-4 block">
                 For Clients
               </span>
@@ -243,40 +238,39 @@ const LandingPage = () => {
       </section>
 
       {/* Final CTA */}
-<section className="pb-24 px-4 text-center">
-  <div className="max-w-4xl mx-auto bg-indigo-50 rounded-[2.5rem] p-12 md:p-20 border border-indigo-100">
-    <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
-      Start accepting bookings the simple way.
-    </h2>
+      <section className="pb-24 px-4 text-center">
+        <div className="max-w-4xl mx-auto bg-indigo-50 rounded-[2.5rem] p-12 md:p-20 border border-indigo-100">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
+            Start accepting bookings the simple way.
+          </h2>
 
-    <p className="text-lg text-slate-600 mb-10 max-w-xl mx-auto">
-      Create your profile, set your availability, and let clients book without the back-and-forth.
-    </p>
+          <p className="text-lg text-slate-600 mb-10 max-w-xl mx-auto">
+            Create your profile, set your availability, and let clients book
+            without the back-and-forth.
+          </p>
 
-    <div className="flex flex-col sm:flex-row justify-center gap-4">
-      <button
-        className={`bg-primary-blue text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all`}
-      >
-        Get started
-      </button>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <button
+              className={`bg-primary-blue text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all`}
+            >
+              Get started
+            </button>
 
-      <button className="bg-white text-slate-900 border border-slate-200 px-10 py-4 rounded-xl font-bold text-lg hover:bg-slate-50 transition-all">
-        View how it works
-      </button>
-    </div>
+            <button className="bg-white text-slate-900 border border-slate-200 px-10 py-4 rounded-xl font-bold text-lg hover:bg-slate-50 transition-all">
+              View how it works
+            </button>
+          </div>
 
-    <p className="mt-8 text-sm text-slate-400">
-      Built for service providers and their clients.
-    </p>
-  </div>
-</section>
-
+          <p className="mt-8 text-sm text-slate-400">
+            Built for service providers and their clients.
+          </p>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="py-12 border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex items-center gap-2">
-            
             <span className="text-lg font-bold tracking-tight">Reserva</span>
           </div>
           <div className="flex gap-8 text-slate-500 text-sm">

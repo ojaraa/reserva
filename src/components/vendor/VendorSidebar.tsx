@@ -51,9 +51,9 @@ const VendorSidebar = () => {
             <SidebarMenuItem className="pb-2 " key={item.label}>
               <SidebarMenuButton
                 asChild
-                className={`${
+                className={` hover:bg-indigo-50 hover:text-primary-blue ${
                   isActive(item.url) &&
-                  "bg-[#e9e9f7] text-sidebar-accent-foreground"
+                  "bg-indigo-50 text-primary-blue  "
                 }`}
               >
                 <Link to={item.url}>
@@ -80,10 +80,15 @@ const VendorSidebar = () => {
             </SidebarMenuItem> */}
 
             <SidebarMenuItem>
-              <SidebarMenuButton asChild>
+              <SidebarMenuButton 
+              asChild 
+            
+              >
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <Button variant="ghost" className="w-full justify-start">
+                    <Button variant="ghost" className="
+                    hover:text-red-500! hover:bg-red-50!
+                    w-full justify-start">
                       <LogOut />
                       <span>Logout</span>
                     </Button>

@@ -1,42 +1,51 @@
+import QuickActions from "@/components/QuickActions";
 import { CustomAvatar } from "@/components/shared/CustomAvatar";
-import { EllipsisVerticalIcon } from "lucide-react";
+// import { Button } from "@/components/ui/button";
+import DashboardStatsCard from "@/components/vendor/DashboardStatsCard";
+import {
+  Bell,
+  Calendar,
+  Check,
+  Clock,
+  List,
+  PlusCircle,
+  // EllipsisVerticalIcon,
+} from "lucide-react";
+import { Link } from "react-router-dom";
 
 const VendorDashboard = () => {
-  const tableTitle = [
-    { name: "Name" },
-    { name: "Email Adress" },
-    { name: "Service Type" },
-    { name: "Date" },
-    { name: "Time" },
-    { name: "" },
-  ];
+  // const tableTitle = [
+  //   { name: "Name" },
+  //   { name: "Email Adress" },
+  //   { name: "Service Type" },
+  //   { name: "Date" },
+  //   { name: "Time" },
+  //   { name: "" },
+  // ];
+
+  const today = new Date().toISOString().split("T")[0];
+  const todaysAppointment = appointments.filter(
+    (appointment) => appointment?.date === today
+  );
+
+  console.log(new Date().toISOString());
+
   return (
-    <div className="grid gap-y-6">
-      {/* <div className="grid gap-y-1.5">
-        <h2 className="text-2xl font-medium">Good morning, Ojara</h2>
-        <p className="">
-          Here is what is happening with your store today.
+    <div className="grid gap-y-6 bg-slate-50">
+      <div>
+        <h1 className="text-2xl font-bold ">Welcome back, Ojara</h1>
+        <p className="text-slate-500 mt-1">
+          Here's what's happening with your business today.
         </p>
-      </div> */}
-
-      <div className="grid grid-cols-3 gap-4">
-        <div className="col-span-3 md:col-span-1 p-4 bg-white rounded-lg shadow">
-          <h3 className="text font-medium mb-2">Upcoming Appointments</h3>
-          <p className="text-2xl font-semibold">10</p>
-        </div>
-
-        <div className="col-span-3 md:col-span-1 p-4 bg-white rounded-lg shadow">
-          <h3 className="text font-medium mb-2">Total Bookings this week</h3>
-          <p className="text-2xl font-semibold">15</p>
-        </div>
-
-        <div className="col-span-3 md:col-span-1 p-4 bg-white rounded-lg shadow">
-          <h3 className="text font-medium mb-2">Upcoming Appointments</h3>
-          <p className="text-2xl font-semibold">10</p>
-        </div>
       </div>
 
-      <div className="grid  bg-white rounded-lg ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+        {stats.map((stat) => (
+          <DashboardStatsCard {...stat} />
+        ))}
+      </div>
+
+      {/* <div className="grid  bg-white rounded-lg ">
         <h2 className="pb-4">Upcoming Appointments</h2>
         <div className="overflow-x">
           <table className=" w-full table-auto divide-y ">
@@ -57,7 +66,7 @@ const VendorDashboard = () => {
             </thead>
 
             <tbody className="divide-y leading-6">
-              {appointments.map((appointment) => (
+              {todaysAppointment.map((appointment) => (
                 <tr key={appointment?.lastName}>
                   <td className="size-px whitespace-nowrap font-normal">
                     <div className="flex items-center gap-x-2">
@@ -113,6 +122,96 @@ const VendorDashboard = () => {
             </tbody>
           </table>
         </div>
+      </div> */}
+
+      <div className="grid lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden">
+          <div className="p-6 flex justify-between items-center">
+            <h3 className="font-bold text-slate-900">Upcoming Appointments</h3>
+            <Link
+              to="/vendor/calendar"
+              className="text-primary-blue font-medium text-sm"
+            >
+              View Calendar
+            </Link>
+          </div>
+
+          <div className="divide-y divide-slate-50">
+            {todaysAppointment.map((appointment) => (
+              <div className="p-5 flex items-center justify-between hover:bg-slate-50/50 transition-colors">
+                <div className="flex items-center gap-4">
+                  <CustomAvatar
+                    fallback={`${appointment?.firstName
+                      .charAt(0)
+                      .toUpperCase()}${appointment?.lastName
+                      .charAt(0)
+                      .toUpperCase()}`}
+                    className="w-12 h-12 text-xs font-semibold"
+                  />
+                  <div>
+                    <p className="font-bold text-slate-900">
+                      {appointment?.firstName} {appointment?.lastName}
+                    </p>
+                    <p className="text-sm text-slate-500">
+                      {appointment.serviceType}
+                    </p>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="font-semibold">
+                    {appointment?.startTime} - {appointment?.endTime}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="p-4 text-center">
+            <Link
+              to={"/vendor/bookings"}
+              className="text-primary-blue hover:font-bold transistion-colors transistion-ease-in-out"
+            >
+              View all bookings
+            </Link>
+          </div>
+        </div>
+
+        <div className="bg-white border border-slate-100 rounded-2xl shadow-sm p-6">
+          <h3 className="font-bold text-slate-900 mb-6 flex items-center gap-2">
+            Quick Actions
+          </h3>
+
+          <div className="grid grid-cols-1 gap-3">
+            <QuickActions
+              icon={<Clock size={18} />}
+              label="Set availability"
+              description="Update your working hours"
+              primaryColor="text-primary-blue"
+
+            />
+            <QuickActions
+              icon={<Calendar size={18} />}
+              label="View calendar"
+              description="Full schedule overview"
+              primaryColor="text-primary-blue"
+              href="/vendor/calendar"
+            />
+            <QuickActions
+              icon={<PlusCircle size={18} />}
+              label="Add a service"
+              description="Create a new offering"
+              primaryColor="text-primary-blue"
+              href="/vendor/services"
+            />
+            <QuickActions
+              icon={<List size={18} />}
+              label="View all bookings"
+              description="Search history & upcoming"
+              primaryColor="text-primary-blue"
+              href="/vendor/bookings"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -126,7 +225,7 @@ const appointments = [
     lastName: "Johnson",
     email: "sophiaj@example.com",
     serviceType: "Facial Treatment",
-    date: "2025-02-10",
+    date: "2026-01-15",
     startTime: "10:00 AM",
     endTime: "11:00 AM",
     status: "Completed",
@@ -136,7 +235,7 @@ const appointments = [
     lastName: "Carter",
     email: "emilyc@example.com",
     serviceType: "Hair Styling",
-    date: "2025-02-11",
+    date: "2026-01-15",
     startTime: "1:30 PM",
     endTime: "2:30 PM",
     status: "Pending",
@@ -146,7 +245,7 @@ const appointments = [
     lastName: "Bennett",
     email: "oliviab@example.com",
     serviceType: "Manicure",
-    date: "2025-02-14",
+    date: "2026-01-15",
     startTime: "3:00 PM",
     endTime: "4:00 PM",
     status: "Accepted",
@@ -200,5 +299,41 @@ const appointments = [
     startTime: "12:30 PM",
     endTime: "1:30 PM",
     status: "Completed",
+  },
+];
+
+const stats = [
+  {
+    label: "Today's Booking",
+    value: "12",
+    subtext: "4 completed",
+    icon: <Clock className="w-5 h-5" />,
+    iconColor: "text-blue-600",
+    iconBg: "bg-blue-50",
+  },
+  {
+    label: "Upcoming (This Week)",
+    value: "48",
+    subtext: "+12% from last week",
+    icon: <Calendar className="w-5 h-5" />,
+    iconColor: "text-primary-blue",
+    iconBg: "bg-indigo-50",
+  },
+  {
+    label: "Availability Status",
+    value: "Available today",
+    subtext: "4 slots remaining",
+    icon: <Check className="w-5 h-5" />,
+    iconColor: "text-emerald-600",
+    iconBg: "bg-emerald-50",
+    isStatus: true,
+  },
+  {
+    label: "Pending Requests",
+    value: "7",
+    subtext: "Needs your attention",
+    icon: <Bell className="w-5 h-5" />,
+    iconColor: "text-amber-600",
+    iconBg: "bg-amber-50",
   },
 ];

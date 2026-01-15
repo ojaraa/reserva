@@ -8,11 +8,11 @@ const VendorDashboardLayout = () => {
     <SidebarProvider>
       <VendorSidebar />
       <main className="min-h-screen w-full ">
-        <div className="flex  justify-between items-center p-4 border-b">
+        <div className="flex bg-white  justify-between items-center p-4 border-b sticky top-0 z-10">
           <SidebarTrigger />
           <CustomAvatar src="" fallback="OJ" className="cursor-pointer font-semibold" />
         </div>
-        <div className="p-6">
+        <div className="p-6 bg-slate-50">
        <Outlet />
         </div>
 

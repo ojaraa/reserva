@@ -24,21 +24,21 @@ import { auth } from "@/services/firebase.config";
 import DeleteConfirmation from "../shared/DeleteConfirmation";
 
 const ClientSidebar = () => {
-      const location = useLocation();
-    
-      const isActive = (path: string) => {
-        return location.pathname === path;
-      };
+  const location = useLocation();
 
-       const handleLogout = async () => {
-          try {
-            await signOut(auth);
-          } catch (error) {
-            console.log(error);
-          }
-        };
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-     <Sidebar className="px-4 py-4 ">
+    <Sidebar className="px-4 py-4 ">
       <SidebarHeader>
         <Link to={"/"} className="flex gap-x-1 items-center">
           <h2 className="text-2xl font-medium">reserva</h2>
@@ -49,7 +49,13 @@ const ClientSidebar = () => {
         <SidebarMenu className="mt-6">
           {clientSidebarItems.map((item) => (
             <SidebarMenuItem className="pb-2 " key={item.label}>
-              <SidebarMenuButton asChild className={`${isActive(item.url) && "bg-[#e9e9f7] text-sidebar-accent-foreground"}`}>
+              <SidebarMenuButton
+                asChild
+                className={` hover:bg-indigo-50 hover:text-primary-blue${
+                  isActive(item.url) &&
+                  "bg-indigo-50  text-primary-blue"
+                }`}
+              >
                 <Link to={item.url}>
                   <item.icon />
                   <span>{item.label}</span>
@@ -76,30 +82,30 @@ const ClientSidebar = () => {
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <AlertDialog>
-                                  <AlertDialogTrigger asChild>
-                                    <Button variant="ghost" className="w-full justify-start">
-                                      <LogOut />
-                                      <span>Logout</span>
-                                    </Button>
-                                  </AlertDialogTrigger>
-                
-                                  <DeleteConfirmation
-                                    description="Are you sure you want to logout?"
-                                    title="Logout"
-                                    handleDelete={handleLogout}
-                                    buttonText="Logout"
-                                  />
-                                </AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="ghost" className="w-full justify-start">
+                      <LogOut />
+                      <span>Logout</span>
+                    </Button>
+                  </AlertDialogTrigger>
+
+                  <DeleteConfirmation
+                    description="Are you sure you want to logout?"
+                    title="Logout"
+                    handleDelete={handleLogout}
+                    buttonText="Logout"
+                  />
+                </AlertDialog>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroup>
       </SidebarFooter>
     </Sidebar>
-  )
-}
+  );
+};
 
-export default ClientSidebar
+export default ClientSidebar;
 
 const clientSidebarItems = [
   {
@@ -107,7 +113,7 @@ const clientSidebarItems = [
     url: "/client/dashboard",
     icon: LayoutDashboardIcon,
   },
-    {
+  {
     label: "Vendors",
     url: "/client/vendors",
     icon: MdBusiness,
@@ -127,6 +133,5 @@ const clientSidebarItems = [
     label: "Favourites",
     url: "/client/favorites",
     icon: Star,
-  }
-
+  },
 ];
