@@ -22,7 +22,6 @@ import VendorDashboard from "@/pages/vendor/vendor-dashboard";
 import VendorOnboarding from "@/pages/vendor/vendor-onboarding";
 import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoutes from "./protected-routes";
-
 const router = createBrowserRouter([
   {
     path: "/",
