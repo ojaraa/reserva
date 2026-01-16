@@ -32,8 +32,8 @@ const SignUp = () => {
 
   const handleSignUpWithEmail = async () => {
     const { email, password, firstName, lastName } = form.getValues();
-    console.log(form.getValues());
     const isValid = await form.trigger();
+
     if (!isValid) return;
     try {
       const userData = await createUserWithEmailAndPassword(
@@ -63,8 +63,8 @@ const SignUp = () => {
   const handleSignUpWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      console.log("google user", result.user);
       const uid = result.user.uid;
+      console.log(result.user);
       const userRef = doc(db, "users", uid);
       await setDoc(userRef, {
         name: result.user.displayName,
@@ -73,6 +73,9 @@ const SignUp = () => {
         role: null,
         createdAt: serverTimestamp(),
       });
+
+      toast.success("Account created successfully");
+      navigate("/choose-your-user-type");
     } catch (error) {
       console.log(error);
       toast.error((error as { message: string }).message);

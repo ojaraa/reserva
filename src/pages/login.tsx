@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/button";
 // import { useAuth } from "@/hooks/useAuth";
 import type { UserData } from "@/models/interface";
 import { loginSchema } from "@/models/schema";
-import { auth, db } from "@/services/firebase.config";
+import { auth, db, googleProvider } from "@/services/firebase.config";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { Calendar, MessageCircleOff, Settings,} from "lucide-react";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import { Calendar, MessageCircleOff, Settings } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -31,6 +31,7 @@ const LoginPage = () => {
         email,
         password
       );
+      // get the user's data to checkk theri onboarding status
       const user = userCredential.user;
       const userDocRef = doc(db, "users", user.uid);
       const userDoc = await getDoc(userDocRef);
@@ -42,6 +43,40 @@ const LoginPage = () => {
             ? `/${userType}/dashboard`
             : "/choose-your-user-type";
         navigate(nextRoute);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error((error as { message: string }).message);
+    }
+  };
+
+  const handleLoginWithGoogle = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+
+      const user = result.user;
+      const userDocRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+      const userData = userDoc.data() as UserData | null;
+      const userType = userData?.role;
+
+      if (userData) {
+        const nextRoute =
+          userData?.onboardingStatus === "COMPLETED"
+            ? `/${userType}/dashboard`
+            : "/choose-your-user-type";
+        navigate(nextRoute);
+      } else {
+        const uid = result.user.uid;
+        const userRef = doc(db, "users", uid);
+        await setDoc(userRef, {
+          name: result.user.displayName,
+          email: result.user.email,
+          uid,
+          role: null,
+          createdAt: serverTimestamp(),
+        });
+        navigate("/choose-your-user-type")
       }
     } catch (error) {
       console.log(error);
@@ -106,7 +141,8 @@ const LoginPage = () => {
 
           <Button
             className="w-full bg-white border hover:bg-gray-100 mt-4 text-black"
-            onClick={() => navigate("/onboarding")}
+            onClick={handleLoginWithGoogle}
+            type="button"
           >
             <img
               src={`/assets/images/google.png`}
@@ -147,15 +183,15 @@ const LoginPage = () => {
 
         <div className="space-y-4 text-sm">
           <div className="flex items-center gap-x-2">
-            <Calendar className="text-primary-blue "size={20}/>
+            <Calendar className="text-primary-blue " size={20} />
             Real-time booking calendar
           </div>
           <div className="flex items-center gap-x-2">
-            <MessageCircleOff className="text-primary-blue "size={20} />
+            <MessageCircleOff className="text-primary-blue " size={20} />
             No more DMs to manage
           </div>
           <div className="flex items-center gap-x-2">
-            <Settings className="text-primary-blue "size={20}/>
+            <Settings className="text-primary-blue " size={20} />
             Built for service providers
           </div>
         </div>

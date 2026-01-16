@@ -83,17 +83,19 @@ const VendorOnboarding = () => {
         });
         methods.reset();
         navigate("/onboarding/success");
-        // localStorage.setItem("userType", "vendor");
-        // localStorage.setItem("onboardingCompleted", "true");
       }
     } catch (error) {
       console.log(error);
+      // toast.error()
     }
   };
 
   const isReviewStep = currentStep === stepFields.length;
 
-  const { getValues } = methods;
+  const {
+    getValues,
+    formState: { isSubmitting },
+  } = methods;
 
   const nextStep = async () => {
     if (currentStep === 3) {
@@ -114,18 +116,16 @@ const VendorOnboarding = () => {
 
   return (
     <div className=" gap-y-6flex flex-col 00 min-h-screen bg-slate-50 py-12 px-6">
-     
-
       <div className=" mx-auto mb-9 w-full  md:w-2xl">
         <div className="flex justify-between text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">
-          <span>Step {currentStep} of 4</span>
-          <span>{Math.round((currentStep / 4) * 100)}% Complete</span>
+          <span>Step {currentStep + 1} of 4</span>
+          <span>{Math.round(((currentStep + 1) / 4) * 100)}% Complete</span>
         </div>
         <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
           <div
             className="h-full transition-all duration-500 ease-out bg-primary-blue"
             style={{
-              width: `${(currentStep / 4) * 100}%`,
+              width: `${((currentStep + 1) / 4) * 100}%`,
             }}
           ></div>
         </div>
@@ -156,8 +156,17 @@ const VendorOnboarding = () => {
               Back
             </Button>
 
-            <Button onClick={nextStep} type="button" className="py-7 px-10">
-              {isReviewStep ? "Complete setup" : "Next"}
+            <Button
+              onClick={nextStep}
+              type="button"
+              className="py-7 px-10"
+              disabled={isSubmitting}
+            >
+              {isSubmitting
+                ? "Submitting"
+                : isReviewStep
+                ? "Complete setup"
+                : "Next"}
             </Button>
           </div>
         </form>
