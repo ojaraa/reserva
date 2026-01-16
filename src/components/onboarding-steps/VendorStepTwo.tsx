@@ -7,10 +7,13 @@ import TextAreaInput from "../shared/TextAreaInput";
 import { Controller, useFormContext } from "react-hook-form";
 
 const VendorStepTwo = () => {
-  const { control, formState: { errors }} = useFormContext();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
   return (
-    <div className="grid gap-y-4 ">
-      <p className="">Step 2</p>
+    <div className="grid gap-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500 px-6 py-12 md:p-8 sm:w-[50vw] mx-auto rounded-3xl bg-white shadow-sm border border-slate-100">
+      {/* <p className="">Step 2</p> */}
       <div className="grid gap-y-1">
         <h1 className="text-2xl font-medium">Add your services</h1>
         <p className="text-muted-foreground">
@@ -19,36 +22,39 @@ const VendorStepTwo = () => {
       </div>
 
       <div className="grid gap-y-4">
-        <Controller
-          name="serviceCategory"
-          control={control}
-          render={({ field }) => (
-            <SelectInput
-              placeholder="Select a category that match your service"
-              label="Service Category"
-              options={Object.values(serviceCategories).map((category) => ({
-                label: category.name,
-                value: category.name,
-              }))}
-              {...field}
-              error={errors?.serviceCategory?.message as string}
-            />
-          )}
-        />
-
-        <Controller
-          name="serviceName"
-          control={control}
-          render={({ field }) => (
-            <FormInput
-              type="text"
-              label="Service Name"
-              placeholder="e.g Haircut"
-              {...field}
-              error={errors?.serviceName?.message as string}
-            />
-          )}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Controller
+            name="serviceName"
+            control={control}
+            render={({ field }) => (
+              <FormInput
+                type="text"
+                label="Service Name"
+                placeholder="e.g Haircut"
+                isCompulsory
+                {...field}
+                error={errors?.serviceName?.message as string}
+              />
+            )}
+          />
+          <Controller
+            name="serviceCategory"
+            control={control}
+            render={({ field }) => (
+              <SelectInput
+                placeholder="Select a category that match your service"
+                label="Service Category"
+                options={Object.values(serviceCategories).map((category) => ({
+                  label: category.name,
+                  value: category.name,
+                }))}
+                {...field}
+                isCompulsory
+                error={errors?.serviceCategory?.message as string}
+              />
+            )}
+          />
+        </div>
 
         <div className="grid grid-cols-2 gap-x-4">
           <Controller
@@ -57,11 +63,12 @@ const VendorStepTwo = () => {
             render={({ field }) => (
               <FormInput
                 type="number"
-                label="Duration"
+                label="Duration (mins)"
                 placeholder="e.g 30 mins"
-                 {...field}
-                  onChange={(e) => field.onChange(Number(e.target.value))}
-               error={errors?.serviceDuration?.message as string}
+                isCompulsory
+                {...field}
+                onChange={(e) => field.onChange(Number(e.target.value))}
+                error={errors?.serviceDuration?.message as string}
               />
             )}
           />
@@ -74,8 +81,9 @@ const VendorStepTwo = () => {
                 type="number"
                 label="Price"
                 placeholder="e.g $50"
+                isCompulsory
                 {...field}
-                  onChange={(e) => field.onChange(Number(e.target.value))}
+                onChange={(e) => field.onChange(Number(e.target.value))}
                 error={errors?.servicePrice?.message as string}
               />
             )}
@@ -101,7 +109,6 @@ const VendorStepTwo = () => {
           Add another service
         </Button>
       </div>
-
     </div>
   );
 };

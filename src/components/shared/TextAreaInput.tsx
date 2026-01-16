@@ -34,10 +34,11 @@ const TextAreaInput = ({
         )}
       </div>
 
-      <Textarea placeholder={placeholder}  value={value}          
+      <Textarea placeholder={placeholder}  value={value} 
+      className="h-30 py-6 "         
         onChange={onChange}    
         onBlur={onBlur}  />
-      {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+      {error && <p className="text-red-500 text-xs mt-1 ">{error}</p>}
     </Field>
   );
 };

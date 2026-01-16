@@ -38,8 +38,8 @@ export const clientOnboardingSchema = z.object({
 export const vendorOnboardingSchema = z.object({
   businessName: z.string().min(1, "Business Name is required"),
   businessCategory: z.string().min(1, "Business Category is required"),
-  businessEmail: z.email("Enter a valid email address"),
-  businessPhoneNumber: z.string().min(1, "Business Phone Number is required"),
+  businessEmail: z.string().email().optional(),
+  businessPhoneNumber: z.string().optional(),
   businessLocation: z.string().optional(),
   businessBio: z.string().optional(),
 

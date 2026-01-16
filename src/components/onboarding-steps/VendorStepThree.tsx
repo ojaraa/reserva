@@ -1,8 +1,8 @@
 import { Label } from "../ui/label";
-import { Copy } from "lucide-react";
-import { Button } from "@/components/ui/button";
+// import { Copy } from "lucide-react";
+// import { Button } from "@/components/ui/button";
 import FormInput from "@/components/shared/FormInput";
-import { Switch } from "@/components/ui/switch";
+// import { Switch } from "@/components/ui/switch";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Controller, useFormContext } from "react-hook-form";
 
@@ -48,9 +48,9 @@ const VendorStepThree = () => {
   const { control } = useFormContext();
 
   return (
-    <div className="grid gap-y-6  pb-7 ">
-      <p className="">Step 3</p>
-      <div className="grid gap-y-2">
+    <div className="grid gap-y-6 sm:w-[50vw] mx-auto px-4 py-12 md:p-8  rounded-3xl bg-white shadow-sm border border-slate-100 animate-in fade-in slide-in-from-bottom-4 duration-500">
+
+      <div className="grid gap-y-2 ">
         <h1 className="text-2xl font-medium">Set up Availability</h1>
         <p className="text-muted-foreground">
           Define your booking schedules to let clients know when you're
@@ -69,41 +69,38 @@ const VendorStepThree = () => {
 
       <div className="grid gap-y-6 ">
         {Object.keys(availability).map((day) => (
-          <div className="flex items-center gap-x-8 " key={day}>
-            <div className="w-36 flex items-center justify-between gap-3">
-              <Label className="capitalize" htmlFor={day}>
-                {day}
-              </Label>
-           
-
+          <div className="flex items-center justify-between  p-4 rounded-xl border border-slate-100 bg-slate-50/50" key={day}>
+            <div className=" flex items-center justify-between gap-3">
               <Controller
                 name={`availability.${day}.enabled`}
                 control={control}
                 render={({ field }) => (
-                  <Switch
+                  <Checkbox
                     checked={field.value}
                     onCheckedChange={field.onChange}
-                    // value={availab}
                   />
                 )}
               />
+
+              <Label className="capitalize" htmlFor={day}>
+                {day}
+              </Label>
             </div>
 
-            <div className="flex gap-x-4">
-             
-
+            <div className="flex gap-x-4 items-center">
               <Controller
                 name={`availability.${day}.start`}
                 control={control}
                 render={({ field }) => (
                   <FormInput
                     type="text"
-                    label="From"
                     placeholder="09:00 AM"
                     {...field}
                   />
                 )}
               />
+
+              <span className="text-muted-foreground">-</span>
 
               <Controller
                 name={`availability.${day}.end`}
@@ -111,7 +108,6 @@ const VendorStepThree = () => {
                 render={({ field }) => (
                   <FormInput
                     type="text"
-                    label="To"
                     placeholder="05:00 PM"
                     {...field}
                   />
@@ -122,7 +118,7 @@ const VendorStepThree = () => {
         ))}
       </div>
 
-      <div className="mt-3 flex items-center justify-between">
+      {/* <div className="mt-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Checkbox id="sameHours" className="rounded" />
           <Label htmlFor="sameHours" className="text-sm text-primary-blue">
@@ -140,10 +136,9 @@ const VendorStepThree = () => {
           <Copy className="w-4 h-4 mr-2" />
           Copy Monday's hours to all days
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 };
 
 export default VendorStepThree;
-

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { vendorOnboardingSchema, type FormData } from "@/models/schema";
 import { FormProvider, useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -113,15 +113,28 @@ const VendorOnboarding = () => {
   };
 
   return (
-    <div className=" gap-y-8 h-screen flex flex-col">
-      <Link to={"/"} className="pt-5 px-6 flex gap-x-1 items-center">
-        <h2 className="text-2xl font-medium">reserva</h2>
-      </Link>
+    <div className=" gap-y-6flex flex-col 00 min-h-screen bg-slate-50 py-12 px-6">
+     
+
+      <div className=" mx-auto mb-9 w-full  md:w-2xl">
+        <div className="flex justify-between text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">
+          <span>Step {currentStep} of 4</span>
+          <span>{Math.round((currentStep / 4) * 100)}% Complete</span>
+        </div>
+        <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+          <div
+            className="h-full transition-all duration-500 ease-out bg-primary-blue"
+            style={{
+              width: `${(currentStep / 4) * 100}%`,
+            }}
+          ></div>
+        </div>
+      </div>
 
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(submitForm)}
-          className="flex flex-col w-full px-6  sm:w-[45vw] mx-auto "
+          className="flex flex-col w-full    "
         >
           {currentStep === 0 && <VendorStepOne />}
 
@@ -133,13 +146,17 @@ const VendorOnboarding = () => {
             <ReviewVendorOnboardingDetails setCurrentStep={setCurrentStep} />
           )}
 
-          <div className="flex justify-between mt-10 pb-10 ">
-            <Button variant="ghost" onClick={prevStep}>
+          <div className="flex justify-between items-center mt-10 pb-10 w-full sm:w-[50vw] mx-auto ">
+            <Button
+              variant="outline"
+              className="py-7 px-10!"
+              onClick={prevStep}
+            >
               <ArrowLeft />
               Back
             </Button>
 
-            <Button onClick={nextStep} type="button">
+            <Button onClick={nextStep} type="button" className="py-7 px-10">
               {isReviewStep ? "Complete setup" : "Next"}
             </Button>
           </div>

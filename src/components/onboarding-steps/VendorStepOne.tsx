@@ -9,9 +9,9 @@ const VendorStepOne = () => {
     formState: { errors },
   } = useFormContext();
   return (
-    <div className="grid gap-y-6 ">
-      <p className="mb-6">Step 1</p>
-      <div className="grid gap-y-2">
+    <div className=" animate-in fade-in slide-in-from-bottom-4 duration-500 grid gap-y-6 py-12 px-8 sm:w-[50vw] mx-auto md:p-8  rounded-3xl bg-white shadow-sm border border-slate-100">
+      {/* <p className="mb-6">Step 1</p> */}
+      <div className="grid gap-y-2 ">
         <h1 className="text-2xl font-medium">Tell us about your business</h1>
         <p className="text-muted-foreground">
           Let's get your profile set up, you can always change it later
@@ -19,61 +19,68 @@ const VendorStepOne = () => {
       </div>
 
       <div className="grid gap-y-5">
-        <Controller
-          name="businessName"
-          control={control}
-          render={({ field }) => (
-            <FormInput
-              type="text"
-              label="Business Name"
-              placeholder="e.g Haircuilture salon"
-              {...field}
-              error={errors?.businessName?.message as string}
-            />
-          )}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Controller
+            name="businessName"
+            control={control}
+            render={({ field }) => (
+              <FormInput
+                type="text"
+                label="Business Name"
+                placeholder="e.g Haircuilture salon"
+                {...field}
+                isCompulsory
+                error={errors?.businessName?.message as string}
+              />
+            )}
+          />
 
-        <Controller
-          name="businessCategory"
-          control={control}
-          render={({ field }) => (
-            <SelectInput
-              label="Business Category"
-              placeholder="Select Category"
-              options={categories}
-              {...field}
-              error={errors?.businessCategory?.message as string}
-            />
-          )}
-        />
+          <Controller
+            name="businessCategory"
+            control={control}
+            render={({ field }) => (
+              <SelectInput
+                label="Business Category"
+                isCompulsory
+                placeholder="Select Category"
+                options={categories}
+                {...field}
+                error={errors?.businessCategory?.message as string}
+              />
+            )}
+          />
+        </div>
 
-        <Controller
-          name="businessPhoneNumber"
-          control={control}
-          render={({ field }) => (
-            <FormInput
-              type="text"
-              label="Business phone number"
-              placeholder="e.g +1 234 567 890"
-              {...field}
-              error={errors?.businessPhoneNumber?.message as string}
-            />
-          )}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Controller
+            name="businessPhoneNumber"
+            control={control}
+            render={({ field }) => (
+              <FormInput
+                type="text"
+                label="Business phone number"
+                placeholder="e.g +1 234 567 890"
+                {...field}
+                error={errors?.businessPhoneNumber?.message as string}
+              />
+            )}
+          />
 
-         <Controller
-          name="businessEmail"
-          control={control}
-          render={({ field }) => (
-            <FormInput
-              type="email"
-              label="Business email address"
-              placeholder="email@business.com"
-              {...field}
-              error={errors?.businessEmail?.message as string}
-            />
-          )}
-        />
+          <Controller
+            name="businessEmail"
+            control={control}
+            render={({ field }) => (
+              <FormInput
+                type="email"
+                label="Business email address"
+                placeholder="email@business.com"
+                {...field}
+                error={errors?.businessEmail?.message as string}
+              />
+            )}
+          />
+        </div>
+
 
         <Controller
           name="businessLocation"

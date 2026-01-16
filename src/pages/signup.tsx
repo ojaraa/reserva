@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { auth, db, googleProvider } from "@/services/firebase.config";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { Calendar, MessageCircleOff, Settings } from "lucide-react";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -199,11 +200,37 @@ const SignUp = () => {
         </form>
       </div>
 
-      <div className="hidden sm:block h-full   ">
-        <img
-          src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bmFpbCUyMHRlY2huaWNpYW58ZW58MHx8MHx8fDA%3D"
-          className="w-full h-full object-cover"
-        />
+      <div className="hidden sm:block  lg:flex items-center flex-col justify-center h-full bg-slate-50   relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-full h-full opacity-20 pointer-events-none">
+          <div className="absolute top-20 right-20 w-64 h-64 bg-indigo-500 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 left-20 w-64 h-64 bg-indigo-400 rounded-full blur-3xl"></div>
+        </div>
+        <div className="max-w-md relative z-10">
+          <div className="p-8 rounded-[2.5rem]  mb-10">
+            <p className="text-xl font-bold">
+              Booking, without the back-and-forth
+            </p>
+            <p className="text-xl font-medium text-slate-800 leading-relaxed mb-6 italic">
+              Manage availability, receive booking requests, and stay organized
+              in one place.
+            </p>
+          </div>
+        </div>
+
+        <div className="space-y-4 text-sm">
+          <div className="flex items-center gap-x-2">
+            <Calendar className="text-primary-blue " size={20} />
+            Real-time booking calendar
+          </div>
+          <div className="flex items-center gap-x-2">
+            <MessageCircleOff className="text-primary-blue " size={20} />
+            No more DMs to manage
+          </div>
+          <div className="flex items-center gap-x-2">
+            <Settings className="text-primary-blue " size={20} />
+            Built for service providers
+          </div>
+        </div>
       </div>
     </div>
   );

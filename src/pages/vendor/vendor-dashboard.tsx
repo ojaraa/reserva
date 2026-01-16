@@ -1,5 +1,6 @@
 import QuickActions from "@/components/QuickActions";
 import { CustomAvatar } from "@/components/shared/CustomAvatar";
+import { Button } from "@/components/ui/button";
 // import { Button } from "@/components/ui/button";
 import DashboardStatsCard from "@/components/vendor/DashboardStatsCard";
 import {
@@ -127,7 +128,7 @@ const VendorDashboard = () => {
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden">
           <div className="p-6 flex justify-between items-center">
-            <h3 className="font-bold text-slate-900">Upcoming Appointments</h3>
+            <h3 className="font-bold text-slate-900">Today's Upcoming Appointments</h3>
             <Link
               to="/vendor/calendar"
               className="text-primary-blue font-medium text-sm"
@@ -137,42 +138,66 @@ const VendorDashboard = () => {
           </div>
 
           <div className="divide-y divide-slate-50">
-            {todaysAppointment.map((appointment) => (
-              <div className="p-5 flex items-center justify-between hover:bg-slate-50/50 transition-colors">
-                <div className="flex items-center gap-4">
-                  <CustomAvatar
-                    fallback={`${appointment?.firstName
-                      .charAt(0)
-                      .toUpperCase()}${appointment?.lastName
-                      .charAt(0)
-                      .toUpperCase()}`}
-                    className="w-12 h-12 text-xs font-semibold"
-                  />
+            {todaysAppointment?.length === 0 ? (
+              <div className="flex flex-col items-center justify-center min-h-80  gap-3 px-6 md:px-40 text-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-blue/10 text-primary-blue">
+                  <Calendar size={22} />
+                </div>
+                <h3 className="text-lg font-semibold">No appointments today</h3>
+
+                <p className="text-sm text-muted-foreground">
+                  You’re all caught up for today. Upcoming and past bookings are
+                  available in your full calendar.
+                </p>
+                
+
+                <Link
+                  to={"/vendor/bookings"}
+                  className="text-primary-blue hover:font-bold transistion-colors transistion-ease-in-out"
+                >
+                  <Button className="px-7 py-5">View all bookings</Button>
+                </Link>
+              </div>
+            ) : (
+              todaysAppointment.map((appointment) => (
+                <div className="p-5 flex items-center justify-between hover:bg-slate-50/50 transition-colors">
+                  <div className="flex items-center gap-4">
+                    <CustomAvatar
+                      fallback={`${appointment?.firstName
+                        .charAt(0)
+                        .toUpperCase()}${appointment?.lastName
+                        .charAt(0)
+                        .toUpperCase()}`}
+                      className="w-12 h-12 text-xs font-semibold"
+                    />
+                    <div>
+                      <p className="font-bold text-slate-900">
+                        {appointment?.firstName} {appointment?.lastName}
+                      </p>
+                      <p className="text-sm text-slate-500">
+                        {appointment.serviceType}
+                      </p>
+                    </div>
+                  </div>
+
                   <div>
-                    <p className="font-bold text-slate-900">
-                      {appointment?.firstName} {appointment?.lastName}
-                    </p>
-                    <p className="text-sm text-slate-500">
-                      {appointment.serviceType}
+                    <p className="font-semibold">
+                      {appointment?.startTime} - {appointment?.endTime}
                     </p>
                   </div>
                 </div>
-
-                <div>
-                  <p className="font-semibold">
-                    {appointment?.startTime} - {appointment?.endTime}
-                  </p>
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
           <div className="p-4 text-center">
-            <Link
-              to={"/vendor/bookings"}
-              className="text-primary-blue hover:font-bold transistion-colors transistion-ease-in-out"
-            >
-              View all bookings
-            </Link>
+            {todaysAppointment?.length > 0 && (
+              <Link
+                to={"/vendor/bookings"}
+                className="text-primary-blue hover:font-bold transistion-colors transistion-ease-in-out"
+              >
+                View all bookings
+              </Link>
+            )}
           </div>
         </div>
 
@@ -187,7 +212,6 @@ const VendorDashboard = () => {
               label="Set availability"
               description="Update your working hours"
               primaryColor="text-primary-blue"
-
             />
             <QuickActions
               icon={<Calendar size={18} />}

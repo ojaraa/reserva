@@ -22,6 +22,8 @@ import VendorDashboard from "@/pages/vendor/vendor-dashboard";
 import VendorOnboarding from "@/pages/vendor/vendor-onboarding";
 import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoutes from "./protected-routes";
+// import AmaleadLanding from "@/pages/amalead-smaple";
+// import ReservaAuthFlow from "@/pages/testauth";
 // import ReservaVendorDashboard from "@/pages/text";
 const router = createBrowserRouter([
   {
@@ -29,8 +31,12 @@ const router = createBrowserRouter([
     element: <LandingPage />,
   },
   // {
+  //   path: "test-auth",
+  //   element: <ReservaAuthFlow/>
+  // },
+  // {
   //   path: "test",
-  //   element: <ReservaVendorDashboard/>
+  //   element: <AmaleadLanding/>
   // },
   {
     path: "/signup",

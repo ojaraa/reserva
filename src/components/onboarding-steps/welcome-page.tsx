@@ -34,7 +34,7 @@ const WelcomePage = () => {
           Welcome aboard! Your account has been successfully created.
         </p>
         <div className="pt-4">
-          <Button className="w-full" onClick={goToDashboard}>Go to your dashboard</Button>
+          <Button className="w-1/2 py-7 px-10" onClick={goToDashboard}>Go to your dashboard</Button>
         </div>
       </div>
     </div>

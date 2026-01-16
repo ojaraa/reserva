@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Input } from "../ui/input";
 // import { Label } from "../ui/label";
-import { Eye, EyeOff } from "lucide-react";
+import { Asterisk, Eye, EyeOff } from "lucide-react";
 import { Field, FieldLabel } from "../ui/field";
 // import type { FieldError } from "react-hook-form";
 
@@ -14,6 +14,7 @@ interface InputProps {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
  error?: string;
+ isCompulsory?: boolean;
 }
 
 const FormInput = ({
@@ -24,6 +25,7 @@ const FormInput = ({
   dataInvalid,
   value,
   error,
+  isCompulsory,
   onChange,
 }: InputProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -35,9 +37,14 @@ const FormInput = ({
       <div className="flex justify-between items-center">
         <FieldLabel
           className="font-medium text-deep-gray leading-5"
+
           htmlFor={label}
         >
           {label}
+          {isCompulsory && (
+          <Asterisk className="text-red-400" size={10}/>
+
+          )}
         </FieldLabel>
         {optional && (
           <span className="text-sm font-medium text-placeholder">optional</span>
@@ -49,7 +56,7 @@ const FormInput = ({
           value={value}
           onChange={onChange}
           type={type === "password" && showPassword ? "text" : type}
-          className="bg-white h-9 border-[#E4E4E7] border"
+          className="bg-white h-12 border-[#E4E4E7] border pl-4"
           placeholder={placeholder}
         />
           {error && <p className="text-red-500 text-xs mt-1">{error}</p>}

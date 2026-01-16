@@ -113,12 +113,12 @@ export const serviceCategories  ={
         color: "#F59E0B",
         pastelColor: "#FEF3C7"
     },
-    STYLING: {
-        id: 18,
-        name:"Styling / Wardrobe",
-        color: "#F59E0B",
-        pastelColor: "#FEF3C7"
-    },
+    // STYLING: {
+    //     id: 18,
+    //     name:"Styling / Wardrobe",
+    //     color: "#F59E0B",
+    //     pastelColor: "#FEF3C7"
+    // },
     CONSULTATION: {
         id: 19,
         name:" Consultation",
